@@ -1,0 +1,273 @@
+module ietf-routing-types {
+  
+  namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
+  prefix "rt";
+
+  import ietf-yang-types {
+    prefix "yang";
+  }
+  
+  import ietf-inet-types {
+    prefix "inet";
+  }
+  
+  organization
+    "IETF RTG (Routing) Working Group";
+
+  contact
+    "";
+
+  description
+    "This module contains a collection of generally useful derived
+     YANG data types for routing.";
+  
+  revision 2016-09-08 {
+    description
+      "Initial revision.";
+    reference
+      "RFC 6991: Common YANG Data Types";
+  }
+
+  /*** collection of types related to routing ***/
+  typedef router-id {
+    type yang:dotted-quad;
+  }
+
+  // address-family, afi sfi, routing-protocol
+  identity address-family {
+    description
+      "Base identity from which identities describing address
+       families are derived.";
+  }
+
+  identity ipv4 {
+    base address-family;
+    description
+      "This identity represents IPv4 address family.";
+  }
+
+  identity ipv6 {
+    base address-family;
+    description
+      "This identity represents IPv6 address family.";
+  }
+  // Used by: l3sv, ospf, isis, bgp, ldp, pim, etc.
+  // Defined in: iett-routing.yang
+  // bgp defines: afi-safi-type
+  // Do we also need to consider safi??
+
+  /*** used by bgp base services ***/
+  /*** collection of types related to VPN ***/
+  typedef route-target {
+    type string;
+  // Used by: bgp, l3vpn, l2vpn, evpn, mvpn.
+  }
+
+  typedef route-distinguisher {
+    type string;
+  // Used by: bgp, l3vpn, l2vpn, evpn, mvpn, ldp
+  // Defined in: many. bgp, l3vpn, ldp
+  }
+
+  /*** collection of types common to protocals ***/
+  typedef admin-status {
+    type enumeration {
+      enum up {
+        description
+          "Enabled.";
+      }
+      enum down {
+        description
+          "Disabled.";
+      }
+      enum testing {
+        description
+          "In some test mode.";
+      }
+      enum preparing-maintenance {
+        description
+          "Resource is disabled in the control plane to prepare for
+           graceful shutdown for maintenance purposes.";
+        reference
+          "RFC5817: Graceful Shutdown in MPLS and Generalized MPLS
+           Traffic Engineering Networks";
+      }
+      enum maintenance {
+        description
+          "Resource is disabled in the data plane for maintenance
+           purposes.";
+      }
+    }
+    description
+      "Defines a type representing the administrative status.";
+  }
+  // only defines basics: up, down?
+
+  typedef ieee-bandwidth {
+    type string;
+    description
+      "In IEEE floating point format.
+      (-1)**(S) * 2**(Exponent-127) * (1 + Fraction)
+      Exponent: 8 bits; Fraction: 23 bits
+      C99 %a,A format: [-]0x1.hhhhp{+|-}d [-]0x1.HHHHP{+|-}D";
+    reference
+      "RFC3630";
+  }
+  // Note: Define it here, other models can decide to use or not.
+
+  typedef link-access-type {
+    type enumeration {
+      enum "broadcast" {
+        description
+        "Specify broadcast multi-access network.";
+      }
+      enum "non-broadcast" {
+        description
+        "Specify Non-Broadcast Multi-Access (NBMA) network.";
+      }
+      enum "point-to-multipoint" {
+        description
+        "Specify point-to-multipoint network.";
+      }
+      enum "point-to-point" {
+        description
+        "Specify OSPF point-to-point network.";
+      }
+    }
+    description
+      "Link access type.";
+  }
+  // Used by igp and topology models
+  // Note: Define it here, and ohter models can use.
+
+  typedef multicast-source-ipv4-addr-type {
+    type union {
+      type enumeration {
+        enum '*' {
+          description 
+          "Any source address.";
+        }
+      }
+      type inet:ipv4-address;
+    }
+    description 
+      "Multicast source IP address type.";
+  } // multicast-source-ipv4-addr-type
+
+  typedef multicast-source-ipv6-addr-type {
+    type union {
+      type enumeration {
+        enum '*' {
+          description 
+          "Any source address.";
+        }
+      }
+      type inet:ipv6-address;
+    }
+    description 
+      "Multicast source IP address type.";
+  } // multicast-source-ipv6-addr-type
+
+  typedef generalized-label {
+    type binary;
+    description
+      "Generalized label. Nodes sending and receiving the
+       Generalized Label know what kinds of link they are
+       using, the Generalized Label does not identify its
+       type.  Instead, nodes are expected to know from the
+       context what type of label to expect.";
+    reference "rfc3471: section 3.2";
+  // Used by: ietf-te, ietf-te-topology
+  // Currently defined in: ietf-te-types.yang.";
+  }
+  typedef gmpls-label {
+    type binary;
+  }
+  // Note: Put this to mpls types ==> to discuss
+
+  typedef mpls-label {
+    type gmpls-label {
+      length 1..4;
+    }
+    description
+      "range is 0..1048575.";
+  // Used by: mpls-base, mpls-static, te-packet, te-topology-packet, evpn.
+  // Currently defined in: ietf-mpls.yang.";
+  }
+  // Note: Keep this to mpls types
+  
+  typedef oper-status {
+    type enumeration {
+      enum up {
+        description
+        "Operational up.";
+      }
+      enum down {
+        description
+        "Operational down.";
+      }
+      enum testing {
+        description
+        "In some test mode.";
+      }
+      enum unknown {
+        description
+        "Status cannot be determined for some reason.";
+      }
+      enum dormant {
+        description
+        "Waiting for some external event.";
+      }
+      enum not-present {
+        description
+          "Some component (typically hardware) is missing.";
+      }
+      enum lower-layer-down {
+        description
+          "Down due to state of lower-layer interface(s).";
+      }
+      enum preparing-maintenance {
+        description
+          "Resource is disabled in the control plane to prepare for
+           graceful shutdown for maintenance purposes.";
+        reference
+          "RFC5817: Graceful Shutdown in MPLS and Generalized MPLS
+           Traffic Engineering Networks";
+      }
+      enum maintenance {
+        description
+          "Resource is disabled in the data plane for maintenance
+           purposes.";
+      }
+    }
+    description
+      "Defines a type representing the operational status.";
+  }
+
+  typedef timer-multiplier {
+    type uint8;
+  }
+
+  typedef timer-value-second {
+    type union {
+      type uint16;
+      type enumeration {
+        enum "infinity" {
+          description "The timer is set to infinity.";
+        }
+        enum "no-expiry" {
+          description "The timer is not set.";
+        }
+      }
+    }
+    units seconds;
+    description "Timer value type.";
+  } // timer-value-second
+
+  // Groupings:
+  grouping graceful-restart {
+  }
+
+  grouping authentication {
+  }
+}
