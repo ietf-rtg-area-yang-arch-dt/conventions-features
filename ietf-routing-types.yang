@@ -21,7 +21,7 @@ module ietf-routing-types {
     "This module contains a collection of generally useful derived
      YANG data types for routing.";
   
-  revision 2016-09-08 {
+  revision 2016-10-11 {
     description
       "Initial revision.";
     reference
@@ -59,59 +59,93 @@ module ietf-routing-types {
   /*** used by bgp base services ***/
   /*** collection of types related to VPN ***/
   typedef route-target {
-    type string;
+    type string {
+      pattern
+        '(0:(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+      + '[0-5]?\d{0,3}\d):(429496729[0-5]|42949672[0-8]\d|'
+      + '4294967[01]\d{2}|429496[0-6]\d{3}|42949[0-5]\d{4}|'
+      + '4294[0-8]\d{5}|429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|'
+      + '[0-3]?\d{0,8}\d))|'
+      + '(1:(((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|'
+      + '1\d{2}|2[0-4]\d|25[0-5])):(6553[0-5]|655[0-2]\d|'
+      + '65[0-4]\d{2}|6[0-4]\d{3}|[0-5]?\d{0,3}\d))|'
+      + '(2:(429496729[0-5]|42949672[0-8]\d|4294967[01]\d{2}|'
+      + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
+      + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
+      + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+      + '[0-5]?\d{0,3}\d))|'
+      + '(([3-9a-fA-F]|[1-9a-fA-F][\da-fA-F]{1,3}):'
+      + '[\da-fA-F]{1,12})';
+    }
   // Used by: bgp, l3vpn, l2vpn, evpn, mvpn.
   }
 
   typedef route-distinguisher {
-    type string;
+    type string {
+      pattern
+        '(0:(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+      + '[0-5]?\d{0,3}\d):(429496729[0-5]|42949672[0-8]\d|'
+      + '4294967[01]\d{2}|429496[0-6]\d{3}|42949[0-5]\d{4}|'
+      + '4294[0-8]\d{5}|429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|'
+      + '[0-3]?\d{0,8}\d))|'
+      + '(1:(((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|'
+      + '1\d{2}|2[0-4]\d|25[0-5])):(6553[0-5]|655[0-2]\d|'
+      + '65[0-4]\d{2}|6[0-4]\d{3}|[0-5]?\d{0,3}\d))|'
+      + '(2:(429496729[0-5]|42949672[0-8]\d|4294967[01]\d{2}|'
+      + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
+      + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
+      + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+      + '[0-5]?\d{0,3}\d))|'
+      + '(([3-9a-fA-F]|[1-9a-fA-F][\da-fA-F]{1,3}):'
+      + '[\da-fA-F]{1,12})';
+    }
+    description
+      "An RD consists of three fields: a 2-byte type field,
+       an administrator field, and an assigned number field.
+       Accorind to the data formats for type 0, 1, and 2 defined in
+       RFC4364, the encoding pattern is defined as:
+
+       0:2-byte-asn:4-byte-number
+       1:4-byte-ipv4addr:2-byte-number
+       2:4-byte-asn:2-byte-number.
+       2-byte-other-hex-number:6-byte-hex-number
+
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
+       2:1234567890:203.";
+
+    reference
+      "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
   // Used by: bgp, l3vpn, l2vpn, evpn, mvpn, ldp
   // Defined in: many. bgp, l3vpn, ldp
   }
 
   /*** collection of types common to protocals ***/
-  typedef admin-status {
-    type enumeration {
-      enum up {
-        description
-          "Enabled.";
-      }
-      enum down {
-        description
-          "Disabled.";
-      }
-      enum testing {
-        description
-          "In some test mode.";
-      }
-      enum preparing-maintenance {
-        description
-          "Resource is disabled in the control plane to prepare for
-           graceful shutdown for maintenance purposes.";
-        reference
-          "RFC5817: Graceful Shutdown in MPLS and Generalized MPLS
-           Traffic Engineering Networks";
-      }
-      enum maintenance {
-        description
-          "Resource is disabled in the data plane for maintenance
-           purposes.";
-      }
+  typedef ieee-bandwidth {
+    type string {
+      pattern
+        '0[xX](0((\.0?)?[pP](\+)?0?|(\.0?))|'
+      + '1(\.([\da-fA-F]{0,5}[02468aAcCeE]?)?)?[pP](\+)?(12[0-7]|'
+      + '1[01]\d|0?\d?\d)?)|0[xX][\da-fA-F]{1,8}';
     }
     description
-      "Defines a type representing the administrative status.";
-  }
-  // only defines basics: up, down?
-
-  typedef ieee-bandwidth {
-    type string;
-    description
-      "In IEEE floating point format.
-      (-1)**(S) * 2**(Exponent-127) * (1 + Fraction)
-      Exponent: 8 bits; Fraction: 23 bits
-      C99 %a,A format: [-]0x1.hhhhp{+|-}d [-]0x1.HHHHP{+|-}D";
+      "Bamdwidth in IEEE 754 floating point 32-bit binary format:
+       (-1)**(S) * 2**(Exponent-127) * (1 + Fraction),
+       where Exponent uses 8 bits, and Fraction uses 23 bits.
+       The units are bytes per second.
+       The encoding format is the external hexadecimal-significand
+       character sequences specified in IEEE 754 and C99,
+       restricted to be normalized, non-negative, and non-fraction:
+       0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
+       where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
+       integers in the range of [0..127].
+       When six hexadecimal digits are used for 'hhhhhh' or 'HHHHHH',
+       the least significant digit must be an even number.
+       'x' and 'X' indicate hexadecimal; 'p' and 'P' indicate power
+       of two.
+       Some examples are: 0x0p0, 0x1p10, and 0x1.abcde2p+20";
     reference
-      "RFC3630";
+      "IEEE Std 754-2008: IEEE Standard for Floating-Point
+       Arithmetic.";
   }
   // Note: Define it here, other models can decide to use or not.
 
@@ -168,82 +202,6 @@ module ietf-routing-types {
       "Multicast source IP address type.";
   } // multicast-source-ipv6-addr-type
 
-  typedef generalized-label {
-    type binary;
-    description
-      "Generalized label. Nodes sending and receiving the
-       Generalized Label know what kinds of link they are
-       using, the Generalized Label does not identify its
-       type.  Instead, nodes are expected to know from the
-       context what type of label to expect.";
-    reference "rfc3471: section 3.2";
-  // Used by: ietf-te, ietf-te-topology
-  // Currently defined in: ietf-te-types.yang.";
-  }
-  typedef gmpls-label {
-    type binary;
-  }
-  // Note: Put this to mpls types ==> to discuss
-
-  typedef mpls-label {
-    type gmpls-label {
-      length 1..4;
-    }
-    description
-      "range is 0..1048575.";
-  // Used by: mpls-base, mpls-static, te-packet, te-topology-packet, evpn.
-  // Currently defined in: ietf-mpls.yang.";
-  }
-  // Note: Keep this to mpls types
-  
-  typedef oper-status {
-    type enumeration {
-      enum up {
-        description
-        "Operational up.";
-      }
-      enum down {
-        description
-        "Operational down.";
-      }
-      enum testing {
-        description
-        "In some test mode.";
-      }
-      enum unknown {
-        description
-        "Status cannot be determined for some reason.";
-      }
-      enum dormant {
-        description
-        "Waiting for some external event.";
-      }
-      enum not-present {
-        description
-          "Some component (typically hardware) is missing.";
-      }
-      enum lower-layer-down {
-        description
-          "Down due to state of lower-layer interface(s).";
-      }
-      enum preparing-maintenance {
-        description
-          "Resource is disabled in the control plane to prepare for
-           graceful shutdown for maintenance purposes.";
-        reference
-          "RFC5817: Graceful Shutdown in MPLS and Generalized MPLS
-           Traffic Engineering Networks";
-      }
-      enum maintenance {
-        description
-          "Resource is disabled in the data plane for maintenance
-           purposes.";
-      }
-    }
-    description
-      "Defines a type representing the operational status.";
-  }
-
   typedef timer-multiplier {
     type uint8;
   }
@@ -263,11 +221,4 @@ module ietf-routing-types {
     units seconds;
     description "Timer value type.";
   } // timer-value-second
-
-  // Groupings:
-  grouping graceful-restart {
-  }
-
-  grouping authentication {
-  }
 }
