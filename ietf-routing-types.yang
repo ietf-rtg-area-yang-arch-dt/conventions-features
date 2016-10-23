@@ -1,5 +1,3 @@
-<![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2016-10-21.yang"
 module ietf-routing-types {
   
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -13,21 +11,20 @@ module ietf-routing-types {
     prefix "inet";
   }
   
-  organization
-    "IETF RTG (Routing) Working Group";
+  organization "IETF Routing Area Working Group (rtgwg)";
 
   contact
-    "";
+      "Routing Area Working Group - <rtgwg@ietf.org>";
 
   description
-    "This module contains a collection of generally useful derived
-     YANG data types for routing.";
+    "This module contains a collection of YANG data types
+      considered generally useful for routing protocols.";
   
-  revision 2016-10-21 {
+  revision 2016-10-23 {
     description
       "Initial revision.";
     reference
-      "RFC 6991: Common YANG Data Types";
+      "RFC TBD: Routing YANG Data Types";
   }
 
   /*** collection of types related to routing ***/
@@ -58,6 +55,171 @@ module ietf-routing-types {
       "This identity represents IPv6 address family.";
   }
 
+  //The rest of the values deinfed in the IANA registry
+
+  identity nsap {
+    base address-family;
+    description
+      "Address family from IANA registry.";
+  }
+  identity hdlc {
+    base address-family;
+    description
+      "(8-bit multidrop)
+        Address family from IANA registry.";
+  }
+  identity bbn1822 {
+    base address-family;
+    description
+      "AHIP (BBN report #1822)
+       Address family from IANA registry.";
+  }
+  identity ieee802 {
+    base address-family;
+    description
+      "(includes all 802 media plus Ethernet canonical format)
+       Address family from IANA registry.";
+  }
+  identity e163 {
+    base address-family;
+    description
+      "Address family from IANA registry.";
+  }
+  identity e164 {
+    base address-family;
+    description
+      "SMDS, Frame Relay, ATM
+       Address family from IANA registry.";
+  }
+  identity f69 {
+    base address-family;
+    description
+      "(Telex)
+       Address family from IANA registry.";
+  }
+  identity x121 {
+    base address-family;
+    description
+      "(X.25, Frame Relay)
+       Address family from IANA registry.";
+  }
+  identity ipx {
+    base address-family;
+    description
+      "Address family from IANA registry.";
+  }
+  identity appletalk {
+    base address-family;
+    description
+      "Address family from IANA registry.";
+  }
+  identity decnet-iv {
+    base address-family;
+    description
+      "Decnet IV
+       Address family from IANA registry.";
+  }
+  identity vines {
+    base address-family;
+    description
+      "Banyan Vines
+       Address family from IANA registry.";
+  }
+  identity e164-nsap {
+    base address-family;
+    description
+      "E.164 with NSAP format subaddress
+       Address family from IANA registry.";
+  }
+  identity dns {
+    base address-family;
+    description
+      "Domain Name System
+       Address family from IANA registry.";
+  }
+  identity dn {
+    base address-family;
+    description
+      "Distinguished Name
+       Address family from IANA registry.";
+  }
+  identity as-num {
+    base address-family;
+    description
+      "AS Number
+       Address family from IANA registry.";
+  }
+  identity xtp-v4 {
+    base address-family;
+    description
+      "XTP over IPv4
+       Address family from IANA registry.";
+  }
+  identity xtp-v6 {
+    base address-family;
+    description
+      "XTP over IPv6
+       Address family from IANA registry.";
+  }
+  identity xtp {
+    base address-family;
+    description
+      "XTP native mode XTP
+       Address family from IANA registry.";
+  }
+  identity fc-port {
+    base address-family;
+    description
+      "Fibre Channel World-Wide Port Name
+       Address family from IANA registry.";
+  }
+  identity fc-node {
+    base address-family;
+    description
+      "Fibre Channel World-Wide Node Name
+       Address family from IANA registry.";
+  }
+  identity gwid {
+    base address-family;
+    description
+      "Address family from IANA registry.";
+  }
+  identity l2vpn {
+    base address-family;
+    description
+      "Address family from IANA registry.";
+  }
+  identity mpls-tp-section-eid {
+    base address-family;
+    description
+      "MPLS-TP Section Endpoint Identifier
+       Address family from IANA registry.";
+  }
+  identity mpls-tp-lsp-eid {
+    base address-family;
+    description
+      "MPLS-TP LSP Endpoint Identifier
+       Address family from IANA registry.";
+  }
+  identity mpls-tp-pwe-eid {
+    base address-family;
+    description
+      "MPLS-TP Pseudowire Endpoint Identifier
+       Address family from IANA registry.";
+  }
+  identity mt-v4 {
+    base address-family;
+    description
+      "Multi-Topology IPv4.
+       Address family from IANA registry.";
+  }
+  identity mt-v6 {
+    base address-family;
+    description
+      "Multi-Topology IPv6.
+       Address family from IANA registry.";
+  }
+  
   /*** collection of types related to VPN ***/
   typedef route-target {
     type string {
@@ -141,7 +303,7 @@ module ietf-routing-types {
       + '1[01]\d|0?\d?\d)?)|0[xX][\da-fA-F]{1,8}';
     }
     description
-      "Bamdwidth in IEEE 754 floating point 32-bit binary format:
+      "Bandwidth in IEEE 754 floating point 32-bit binary format:
        (-1)**(S) * 2**(Exponent-127) * (1 + Fraction),
        where Exponent uses 8 bits, and Fraction uses 23 bits.
        The units are bytes per second.
@@ -214,6 +376,9 @@ module ietf-routing-types {
 
   typedef timer-multiplier {
     type uint8;
+    description
+      "The number of timer value intervals that should be 
+      interpreted as a failure.";
   }
 
   typedef timer-value-second {
@@ -232,5 +397,3 @@ module ietf-routing-types {
     description "Timer value type.";
   }
 }
-<CODE ENDS>
-]]>
