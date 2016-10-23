@@ -1,7 +1,9 @@
+<![CDATA[
+<CODE BEGINS> file "ietf-routing-types@2016-10-21.yang"
 module ietf-routing-types {
   
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
-  prefix "rt";
+  prefix "rt-types";
 
   import ietf-yang-types {
     prefix "yang";
@@ -21,7 +23,7 @@ module ietf-routing-types {
     "This module contains a collection of generally useful derived
      YANG data types for routing.";
   
-  revision 2016-10-11 {
+  revision 2016-10-21 {
     description
       "Initial revision.";
     reference
@@ -31,9 +33,13 @@ module ietf-routing-types {
   /*** collection of types related to routing ***/
   typedef router-id {
     type yang:dotted-quad;
+    description
+      "A 32-bit number in the dotted quad format assigned to each
+       router. This number uniquely identifies the router within an
+       Autonomous System.";
   }
 
-  // address-family, afi sfi, routing-protocol
+  // address-family
   identity address-family {
     description
       "Base identity from which identities describing address
@@ -51,12 +57,7 @@ module ietf-routing-types {
     description
       "This identity represents IPv6 address family.";
   }
-  // Used by: l3sv, ospf, isis, bgp, ldp, pim, etc.
-  // Defined in: iett-routing.yang
-  // bgp defines: afi-safi-type
-  // Do we also need to consider safi??
 
-  /*** used by bgp base services ***/
   /*** collection of types related to VPN ***/
   typedef route-target {
     type string {
@@ -73,11 +74,24 @@ module ietf-routing-types {
       + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
       + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
       + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d))|'
-      + '(([3-9a-fA-F]|[1-9a-fA-F][\da-fA-F]{1,3}):'
-      + '[\da-fA-F]{1,12})';
+      + '[0-5]?\d{0,3}\d))';
     }
-  // Used by: bgp, l3vpn, l2vpn, evpn, mvpn.
+    description
+      "Route target has a similar format to route distinguisher.
+       A route target consists of three fields: 
+       a 2-byte type field, an administrator field,
+       and an assigned number field.
+       According to the data formats for type 0, 1, and 2 defined in
+       RFC4360, the encoding pattern is defined as:
+
+       0:2-byte-asn:4-byte-number
+       1:4-byte-ipv4addr:2-byte-number
+       2:4-byte-asn:2-byte-number.
+
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
+       2:1234567890:203.";
+    reference
+      "RFC4360: BGP Extended Communities Attribute.";
   }
 
   typedef route-distinguisher {
@@ -100,9 +114,11 @@ module ietf-routing-types {
       + '[\da-fA-F]{1,12})';
     }
     description
-      "An RD consists of three fields: a 2-byte type field,
-       an administrator field, and an assigned number field.
-       Accorind to the data formats for type 0, 1, and 2 defined in
+      "Route distinguisher has a similar format to route target.
+       An route distinguisher consists of three fields:
+       a 2-byte type field, an administrator field,
+       and an assigned number field.
+       According to the data formats for type 0, 1, and 2 defined in
        RFC4364, the encoding pattern is defined as:
 
        0:2-byte-asn:4-byte-number
@@ -112,11 +128,8 @@ module ietf-routing-types {
 
        Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
        2:1234567890:203.";
-
     reference
       "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
-  // Used by: bgp, l3vpn, l2vpn, evpn, mvpn, ldp
-  // Defined in: many. bgp, l3vpn, ldp
   }
 
   /*** collection of types common to protocals ***/
@@ -147,7 +160,6 @@ module ietf-routing-types {
       "IEEE Std 754-2008: IEEE Standard for Floating-Point
        Arithmetic.";
   }
-  // Note: Define it here, other models can decide to use or not.
 
   typedef link-access-type {
     type enumeration {
@@ -171,8 +183,6 @@ module ietf-routing-types {
     description
       "Link access type.";
   }
-  // Used by igp and topology models
-  // Note: Define it here, and ohter models can use.
 
   typedef multicast-source-ipv4-addr-type {
     type union {
@@ -186,7 +196,7 @@ module ietf-routing-types {
     }
     description 
       "Multicast source IP address type.";
-  } // multicast-source-ipv4-addr-type
+  }
 
   typedef multicast-source-ipv6-addr-type {
     type union {
@@ -200,7 +210,7 @@ module ietf-routing-types {
     }
     description 
       "Multicast source IP address type.";
-  } // multicast-source-ipv6-addr-type
+  }
 
   typedef timer-multiplier {
     type uint8;
@@ -220,5 +230,7 @@ module ietf-routing-types {
     }
     units seconds;
     description "Timer value type.";
-  } // timer-value-second
+  }
 }
+<CODE ENDS>
+]]>

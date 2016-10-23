@@ -1,0 +1,16 @@
+<reference anchor="IEEE754">
+  <front>
+    <title>
+      IEEE Standard for Floating-Point Arithmetic
+    </title>
+    <author>
+      <organization>IEEE</organization>
+    </author>
+    <date year="2008" month="August"/>
+    <abstract>
+      <t>
+      </t>
+    </abstract>
+  </front>
+  <seriesInfo name="IEEE Std" value="754-2008"/>
+</reference>

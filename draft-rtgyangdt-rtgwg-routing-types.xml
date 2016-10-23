@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+    <!ENTITY rfc2119 SYSTEM
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+    <!ENTITY rfc6020 SYSTEM
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml">
+    <!ENTITY rfc6991 SYSTEM
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml">
+    <!ENTITY rfc7950 SYSTEM
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml">
+    <!ENTITY ieee754 SYSTEM "reference.ieee.754.xml">
+    <!ENTITY routing-types-yang SYSTEM "ietf-routing-types.yang">
+]>
+
+<!-- may be omitted for very short documents -->
+<?rfc toc="yes"?>
+<?rfc sortrefs="no"?>
+<?rfc symrefs="yes"?>
+<?rfc strict="yes"?>
+<?rfc rfcedstyle="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+
+<!-- these two save paper: start new sections from the same page etc. -->
+<?rfc compact="yes"?> <?rfc subcompact="no"?>
+
+<!-- other categories: bcp, exp, historic, std -->
+<rfc ipr="trust200902" category="std" docName="draft-rtgyangdt-rtgwg-routing-types-00">
+  
+  <front>
+    
+    <title abbrev='Routing Types YANG'>
+      Routing Area Common YANG Data Types
+    </title>
+
+    <author fullname="Xufeng Liu" initials="X." surname="Liu">
+      <organization>Kuatro Technologies</organization>
+      <address>
+        <postal>
+          <street>8281 Greensboro Drive, Suite 200</street>
+          <city>McLean</city>
+          <code>VA 22102</code>
+          <country>USA</country>
+        </postal>
+        <email>xliu@kuatrotech.com</email>
+      </address>
+    </author>
+
+    <author fullname="Yingzhen Qu" initials="Y." surname="Qu">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>170 West Tasman Drive</street>
+          <city>San Jose</city>
+          <code>CA 95134</code>
+          <country>USA</country>
+        </postal>
+        <email>yiqu@cisco.com</email>
+      </address>
+    </author>
+
+    <author initials='A.' surname="Lindem" fullname='Acee Lindem'>
+      <organization>Cisco Systems</organization>
+      <address>
+	<postal>
+          <street>301 Midenhall Way</street>
+          <city>Cary</city> <region>NC</region>
+          <country>USA</country>
+          <code>27513</code>
+	</postal>
+	<email>acee@cisco.com</email>
+      </address>
+    </author>
+
+    <author initials='C.' surname="Hopps" fullname='Christian Hopps'>
+      <organization>Deutsche Telekom</organization>
+      <address>
+	<email>chopps@chopps.org</email>
+      </address>
+    </author>
+
+    <author initials='L.' surname="Berger" fullname='Lou Berger'>
+      <organization>LabN Consulting, L.L.C.</organization>
+      <address>
+	<email>lberger@labn.net</email>
+      </address>
+    </author>
+
+    <date year="2016"/>
+    <area>Routing</area>
+<!--
+    <workgroup>Routing Area Working Group (rtgwg)</workgroup>
+-->
+    
+    <keyword>Network Management</keyword>
+    <keyword>Routing</keyword>
+    <keyword>YANG</keyword>
+
+    <abstract>
+      <t>
+	This document defines a collection of common data types using
+	YANG data modeling language. These derived common types are
+	designed to be imported by other modules in routing area.
+      </t>
+    </abstract>
+  </front>
+
+  <middle>
+
+    <section title="Introduction">
+      <t>
+	YANG <xref target="RFC6020"/> <xref target="RFC7950"/> is a
+	data modeling language used to 	model configuration data,
+	state data, Remote Procedure Calls, and notifications for
+	network management protocols. The YANG language supports a
+	small set of built-in data types and provides mechanisms to
+	derive other types from the built-in types. 
+      </t>
+      <t>
+	This document introduces a collection of common data types derived
+	from the built-in YANG data types. The derived types are designed to
+	be the common types applicable for modeling in routing area.
+      </t>
+
+      <section title="Requirements Language">
+        <t>
+          The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+          "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY" and
+          "OPTIONAL" in this document are to be interpreted as described in
+          BCP 14, RFC 2119 <xref target="RFC2119"/>.
+        </t>
+      </section>
+
+      <section title="Terminology">
+        <t>
+          The terminology for describing YANG data models is found in
+          <xref target="RFC7950"/>.
+        </t>
+      </section>
+    </section>
+
+    <section title="Overview">
+      <t>
+	This document defines the following data types:
+	<list style="symbols">
+	  <t>
+	    router-id
+	  </t>
+	  <t>
+	    address-family
+	  </t>
+	  <t>
+	    route-target
+	  </t>
+	  <t>
+	  route-distinguisher
+	  </t>
+	  <t>
+	    ieee-bandwidth
+	  </t>
+	  <t>
+	    link-access-type
+	  </t>
+	  <t>
+	    multicast-source-ipv4-addr-type
+	  </t>
+	  <t>
+	    multicast-source-ipv6-addr-type
+	  </t>
+	  <t>
+	    timer-multiplier
+	  </t>
+	  <t>
+	    timer-value-second
+	  </t>
+	</list>
+      </t>
+    </section>
+
+    <section title="YANG Module">
+      <figure><artwork>
+        &routing-types-yang;
+      </artwork></figure>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>
+        RFC Ed.: In this section, replace all occurrences of 'XXXX' with the
+	actual RFC number (and remove this note).
+      </t>
+      <t>
+	This document registers the following namespace URIs in the IETF XML
+	registry [RFC3688]:
+      </t>
+      <figure><artwork>
+   --------------------------------------------------------------------
+   URI: urn:ietf:params:xml:ns:yang:ietf-routing-types
+   Registrant Contact: The IESG.
+   XML: N/A, the requested URI is an XML namespace.
+   --------------------------------------------------------------------
+      </artwork></figure>
+
+      <t>
+	This document registers the following YANG modules in the YANG Module
+	Names registry [RFC6020]:
+      </t>
+      <figure><artwork>
+   --------------------------------------------------------------------
+   name:         ietf-routing-types
+   namespace:    urn:ietf:params:xml:ns:yang:ietf-routing-types
+   prefix:       rt-types
+   reference:    RFC XXXX
+   --------------------------------------------------------------------
+      </artwork></figure>
+    </section>
+
+    <section title="Security Considerations">
+      <t>
+	This document defines common data types using the YANG data
+	modeling language. The definitions themselves have no security
+	impact on the Internet, but the usage of these definitions in
+	concrete YANG modules might have. The security considerations
+	spelled out in the YANG specification <xref target="RFC7950"/>
+	apply for this document as well.
+      </t>
+    </section>
+
+    <section title='Acknowledgements'>
+      <t>
+	The Routing Area Yang Architecture design team members
+	included Acee Lindem, Anees Shaikh, Christian Hopps, Dean
+	Bogdanovic, Ebben Aries, Lou Berger, Qin Wu, Rob Shakir,
+	Xufeng Liu, and Yingzhen Qu.
+      </t>
+    </section>
+
+  </middle>
+
+  <back>
+
+    <references title="Normative References">
+      &rfc2119;
+      &rfc6020;
+      &rfc6991;
+      &rfc7950;
+    </references>
+
+    <references title="Informative References">
+      &ieee754;
+    </references>
+
+  </back>
+
+</rfc>
