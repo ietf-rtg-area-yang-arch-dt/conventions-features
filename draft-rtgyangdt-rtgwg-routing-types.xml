@@ -153,6 +153,9 @@
 	  <t hangText="route-distinguisher"><vspace blankLines="0" />
           </t>
 	  <t hangText="ieee-bandwidth"><vspace blankLines="0" />
+           Bandwidth in IEEE 754 floating point 32-bit binary format
+           <xref target="IEEE754"/>. Commonly used in Traffic
+           Engineering control plane protocols.
           </t>
 	  <t hangText="link-access-type"><vspace blankLines="0" />
           </t>
@@ -636,7 +639,22 @@ module ietf-routing-types {
     </references>
 
     <references title="Informative References">
-      <?ieee include="reference.IEEE.754.xml"?>
+      <reference anchor="IEEE754">
+        <front>
+          <title>
+            IEEE Standard for Floating-Point Arithmetic
+          </title>
+          <author>
+            <organization>IEEE</organization>
+          </author>
+          <date year="2008" month="August"/>
+          <abstract>
+            <t>
+            </t>
+          </abstract>
+        </front>
+        <seriesInfo name="IEEE Std" value="754-2008"/>
+      </reference>
       <?rfc include="reference.I-D.ietf-ospf-yang.xml"?>
       <?rfc include="reference.I-D.ietf-idr-bgp-model.xml"?>
     </references>
