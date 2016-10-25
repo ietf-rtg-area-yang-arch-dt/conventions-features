@@ -339,7 +339,7 @@ module ietf-routing-types {
       }
       enum "point-to-point" {
         description
-        "Specify OSPF point-to-point network.";
+        "Specify point-to-point network.";
       }
     }
     description
