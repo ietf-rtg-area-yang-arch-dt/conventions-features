@@ -1,12 +1,12 @@
 module ietf-routing-types {
-  
+
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
   prefix "rt-types";
 
   import ietf-yang-types {
     prefix "yang";
   }
-  
+
   import ietf-inet-types {
     prefix "inet";
   }
@@ -18,9 +18,9 @@ module ietf-routing-types {
 
   description
     "This module contains a collection of YANG data types
-      considered generally useful for routing protocols.";
-  
-  revision 2016-10-25 {
+     considered generally useful for routing protocols.";
+
+  revision 2016-10-28 {
     description
       "Initial revision.";
     reference
@@ -219,7 +219,7 @@ module ietf-routing-types {
       "Multi-Topology IPv6.
        Address family from IANA registry.";
   }
-  
+
   /*** collection of types related to VPN ***/
   typedef route-target {
     type string {
@@ -240,7 +240,7 @@ module ietf-routing-types {
     }
     description
       "Route target has a similar format to route distinguisher.
-       A route target consists of three fields: 
+       A route target consists of three fields:
        a 2-byte type field, an administrator field,
        and an assigned number field.
        According to the data formats for type 0, 1, and 2 defined in
@@ -294,7 +294,7 @@ module ietf-routing-types {
       "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
   }
 
-  /*** collection of types common to protocals ***/
+  /*** collection of types common to protocols ***/
   typedef ieee-bandwidth {
     type string {
       pattern
@@ -350,13 +350,13 @@ module ietf-routing-types {
     type union {
       type enumeration {
         enum '*' {
-          description 
+          description
           "Any source address.";
         }
       }
       type inet:ipv4-address;
     }
-    description 
+    description
       "Multicast source IP address type.";
   }
 
@@ -364,21 +364,21 @@ module ietf-routing-types {
     type union {
       type enumeration {
         enum '*' {
-          description 
+          description
           "Any source address.";
         }
       }
       type inet:ipv6-address;
     }
-    description 
+    description
       "Multicast source IP address type.";
   }
 
   typedef timer-multiplier {
     type uint8;
     description
-      "The number of timer value intervals that should be 
-      interpreted as a failure.";
+      "The number of timer value intervals that should be
+       interpreted as a failure.";
   }
 
   typedef timer-value-seconds16 {

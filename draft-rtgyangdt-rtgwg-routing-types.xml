@@ -251,7 +251,7 @@
 
     <section title="YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2016-10-25.yang"
+<CODE BEGINS> file "ietf-routing-types@2016-10-28.yang"
 module ietf-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -272,9 +272,9 @@ module ietf-routing-types {
 
   description
     "This module contains a collection of YANG data types
-      considered generally useful for routing protocols.";
+     considered generally useful for routing protocols.";
 
-  revision 2016-10-25 {
+  revision 2016-10-28 {
     description
       "Initial revision.";
     reference
@@ -548,7 +548,7 @@ module ietf-routing-types {
       "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
   }
 
-  /*** collection of types common to protocals ***/
+  /*** collection of types common to protocols ***/
   typedef ieee-bandwidth {
     type string {
       pattern
@@ -632,7 +632,7 @@ module ietf-routing-types {
     type uint8;
     description
       "The number of timer value intervals that should be
-      interpreted as a failure.";
+       interpreted as a failure.";
   }
 
   typedef timer-value-seconds16 {
