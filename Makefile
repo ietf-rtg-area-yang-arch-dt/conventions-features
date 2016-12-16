@@ -3,7 +3,7 @@
 #The author makes no claim/restriction on use.  It is provided "AS IS".
 #This file is considered a hack and not production grade by the author
 
-DRAFT  = draft-rtgyangdt-rtgwg-routing-types
+DRAFT  = draft-ietf-rtgwg-routing-types
 MODELS = \
 	 ietf-routing-types.yang 
 
