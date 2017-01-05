@@ -90,7 +90,7 @@
     <abstract>
       <t>
         This document defines a collection of common data types using
-        YANG data modeling language. These derived common types are
+        the YANG data modeling language. These derived common types are
         designed to be imported by other modules defined in the routing area.
       </t>
     </abstract>
@@ -100,7 +100,7 @@
 
     <section title="Introduction">
       <t>
-        YANG <xref target="RFC6020"/> <xref target="RFC7950"/> is a
+        The YANG <xref target="RFC6020"/> <xref target="RFC7950"/> is a
         data modeling language used to  model configuration data,
         state data, Remote Procedure Calls, and notifications for
         network management protocols. The YANG language supports a
@@ -158,7 +158,7 @@
           distribution of virtual routing and forwarding (VRF)
           information, see <xref target="RFC4364"/>, in support of
           virtual private networks (VPNs).  An example usage can be
-          found in <xref target="I-D.ietf-idr-bgp-model"/> and
+          found in <xref target="I-D.ietf-idr-bgp-model"/>.
 
           </t>
           <t hangText="route-distinguisher"><vspace blankLines="0" />
@@ -251,7 +251,7 @@
 
     <section title="YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2016-10-28.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-01-05.yang"
 module ietf-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -274,7 +274,7 @@ module ietf-routing-types {
     "This module contains a collection of YANG data types
      considered generally useful for routing protocols.";
 
-  revision 2016-10-28 {
+  revision 2017-01-05 {
     description
       "Initial revision.";
     reference
@@ -498,7 +498,7 @@ module ietf-routing-types {
        a 2-byte type field, an administrator field,
        and an assigned number field.
        According to the data formats for type 0, 1, and 2 defined in
-       RFC4360, the encoding pattern is defined as:
+       RFC4360 and RFC5668, the encoding pattern is defined as:
 
        0:2-byte-asn:4-byte-number
        1:4-byte-ipv4addr:2-byte-number
@@ -507,7 +507,8 @@ module ietf-routing-types {
        Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
        2:1234567890:203.";
     reference
-      "RFC4360: BGP Extended Communities Attribute.";
+      "RFC4360: BGP Extended Communities Attribute.
+       RFC5668: 4-Octet AS Specific BGP Extended Community.";
   }
 
   typedef route-distinguisher {
@@ -548,6 +549,71 @@ module ietf-routing-types {
       "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
   }
 
+  /*** collection of types common to multicast ***/
+  typedef ipv4-multicast-group-address {
+    type inet:ipv4-address {
+      pattern '(2((2[4-9])|(3[0-9]))\.).*';
+    }
+    description
+      "This type represents an IPv4 multicast group address,
+       which is in the range from 224.0.0.0 to 239.255.255.255.";
+    reference 
+      "RFC1112: Host Extensions for IP Multicasting.";
+  }
+
+  typedef ipv6-multicast-group-address {
+    type inet:ipv6-address {
+      pattern
+        '(([fF]{2}[0-9a-fA-F]{2}):).*';
+    }
+    description
+      "This type represents an IPv6 multicast group address,
+       which is in the range of FF00::/8.";
+    reference 
+      "RFC4291: IP Version 6 Addressing Architecture. Sec 2.7.
+       RFC7346: IPv6 Multicast Address Scopes.";
+  }
+
+  typedef ip-multicast-group-address {
+    type union {
+      type ipv4-multicast-group-address;
+      type ipv6-multicast-group-address;
+    }
+    description
+     "This type represents an IP multicast group address and is IP
+      version neutral. The format of the textual representation
+      implies the IP version. This type supports scoped addresses
+      by allowing zone identifiers in the address format.";
+  }
+
+  typedef ipv4-multicast-source-address {
+    type union {
+      type enumeration {
+        enum '*' {
+          description
+          "Any source address.";
+        }
+      }
+      type inet:ipv4-address;
+    }
+    description
+      "Multicast source IPv4 address type.";
+  }
+
+  typedef ipv6-multicast-source-address {
+    type union {
+      type enumeration {
+        enum '*' {
+          description
+          "Any source address.";
+        }
+      }
+      type inet:ipv6-address;
+    }
+    description
+      "Multicast source IPv6 address type.";
+  }
+
   /*** collection of types common to protocols ***/
   typedef ieee-bandwidth {
     type string {
@@ -560,7 +626,7 @@ module ietf-routing-types {
       "Bandwidth in IEEE 754 floating point 32-bit binary format:
        (-1)**(S) * 2**(Exponent-127) * (1 + Fraction),
        where Exponent uses 8 bits, and Fraction uses 23 bits.
-       The units are bytes per second.
+       The units are octets per second.
        The encoding format is the external hexadecimal-significand
        character sequences specified in IEEE 754 and C99,
        restricted to be normalized, non-negative, and non-fraction:
@@ -598,34 +664,6 @@ module ietf-routing-types {
     }
     description
       "Link access type.";
-  }
-
-  typedef multicast-source-ipv4-addr-type {
-    type union {
-      type enumeration {
-        enum '*' {
-          description
-          "Any source address.";
-        }
-      }
-      type inet:ipv4-address;
-    }
-    description
-      "Multicast source IP address type.";
-  }
-
-  typedef multicast-source-ipv6-addr-type {
-    type union {
-      type enumeration {
-        enum '*' {
-          description
-          "Any source address.";
-        }
-      }
-      type inet:ipv6-address;
-    }
-    description
-      "Multicast source IP address type.";
   }
 
   typedef timer-multiplier {
@@ -688,6 +726,79 @@ module ietf-routing-types {
     units milliseconds;
     description "Timer value type, in milliseconds.";
   }
+
+  /*** collection of types related to MPLS/GMPLS ***/
+  typedef generalized-label {
+    type binary;
+    description
+      "Generalized label. Nodes sending and receiving the
+       Generalized Label know the kinds of link they are
+       using, the Generalized Label does not identify its
+       type.  Instead, nodes are expected to know from the
+       context and type of label to expect.";
+    reference "rfc3471: section 3.2";
+  }
+
+  typedef mpls-label {
+    type uint32 {
+      range "0..1048575";
+    }
+    description
+      "The 20 bits label values in an MPLS label stack entry, 
+       specified in RFC3032. This label value does not include
+       the encodings of Traffic Class and TTL (time to live).";
+    reference
+      "RFC3032: MPLS Label Stack Encoding.";
+  }
+
+  /*** collection of types related to multicast ***/
+
+  /*
+   * Groupings
+   */
+  grouping mpls-label-stack {
+    description
+      "A grouping that specifies an MPLS label stack.";
+    container mpls-label-stack {
+      description
+        "Container for a list of MPLS label stack entries.";
+      list entry {
+        key "id";
+        description
+          "List of MPLS label stack entries.";
+        leaf id {
+          type uint8;
+          description
+            "Identifies the sequence of an MPLS label stack entries.
+             An entry with smaller ID value is precedes an entry in
+             the label stack with a smaller ID.";
+        }
+        leaf label {
+          type mpls-label;
+          description
+            "Label value.";
+        }
+        leaf ttl {
+          type uint8;
+          description
+            "Time to Live (TTL).";
+          reference
+            "RFC3032: MPLS Label Stack Encoding.";
+        }
+        leaf traffic-class {
+          type uint8 {
+            range "0..7";
+          }
+          description
+            "Traffic Class (TC).";
+          reference
+            "RFC5462: Multiprotocol Label Switching (MPLS) Label
+             Stack Entry: 'EXP' Field Renamed to 'Traffic Class'
+             Field.";
+        }
+      }
+    }
+  } // mpls-label-stack
 }
 <CODE ENDS>
         ]]></artwork></figure>

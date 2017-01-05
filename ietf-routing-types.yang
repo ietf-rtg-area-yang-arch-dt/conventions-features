@@ -20,7 +20,7 @@ module ietf-routing-types {
     "This module contains a collection of YANG data types
      considered generally useful for routing protocols.";
 
-  revision 2016-12-18 {
+  revision 2017-01-05 {
     description
       "Initial revision.";
     reference
@@ -478,10 +478,10 @@ module ietf-routing-types {
     type binary;
     description
       "Generalized label. Nodes sending and receiving the
-       Generalized Label know what kinds of link they are
+       Generalized Label know the kinds of link they are
        using, the Generalized Label does not identify its
        type.  Instead, nodes are expected to know from the
-       context what type of label to expect.";
+       context and type of label to expect.";
     reference "rfc3471: section 3.2";
   }
 
@@ -507,22 +507,22 @@ module ietf-routing-types {
       "A grouping that specifies an MPLS label stack.";
     container mpls-label-stack {
       description
-        "Containing a list of MPLS label stack entries.";
+        "Container for a list of MPLS label stack entries.";
       list entry {
         key "id";
         description
-          "A list of MPLS label stack entries.";
+          "List of MPLS label stack entries.";
         leaf id {
           type uint8;
           description
-            "Identifies the sequence of an MPLS label stack entry.
-             An entry with smaller ID value is no top of an entry
-             with a bigger naumer.";
+            "Identifies the sequence of an MPLS label stack entries.
+             An entry with smaller ID value is precedes an entry in
+             the label stack with a smaller ID.";
         }
         leaf label {
           type mpls-label;
           description
-            "The label value of the MPLS label stack entry.";
+            "Label value.";
         }
         leaf ttl {
           type uint8;
@@ -536,7 +536,7 @@ module ietf-routing-types {
             range "0..7";
           }
           description
-            "Traffic Class (TC) field of an MPLS stack entry.";
+            "Traffic Class (TC).";
           reference
             "RFC5462: Multiprotocol Label Switching (MPLS) Label
              Stack Entry: 'EXP' Field Renamed to 'Traffic Class'
