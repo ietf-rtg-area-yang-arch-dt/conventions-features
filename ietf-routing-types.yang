@@ -20,7 +20,7 @@ module ietf-routing-types {
     "This module contains a collection of YANG data types
      considered generally useful for routing protocols.";
 
-  revision 2017-01-05 {
+  revision 2017-01-22 {
     description
       "Initial revision.";
     reference
@@ -482,12 +482,121 @@ module ietf-routing-types {
        using, the Generalized Label does not identify its
        type.  Instead, nodes are expected to know from the
        context and type of label to expect.";
-    reference "rfc3471: section 3.2";
+    reference "RFC3471: Section 3.2";
+  }
+
+  identity mpls-label-special-purpose-value {
+    description
+      "Base identity for deriving identities describing
+       special-purpose Multiprotocol Label Switching (MPLS) label
+       values.";
+    reference
+      "RFC7274: Allocating and Retiring Special-Purpose MPLS
+       Labels.";
+  }
+
+  identity ipv4-explicit-null-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the IPv4 Explicit NULL Label.";
+    reference
+      "RFC3032: MPLS Label Stack Encoding. Section 2.1.";
+  }
+
+  identity router-alert-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the Router Alert Label.";
+    reference
+      "RFC3032: MPLS Label Stack Encoding. Section 2.1.";
+  }
+
+  identity ipv6-explicit-null-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the IPv6 Explicit NULL Label.";
+    reference
+      "RFC3032: MPLS Label Stack Encoding. Section 2.1.";
+  }
+
+  identity implicit-null-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the Implicit NULL Label.";
+    reference
+      "RFC3032: MPLS Label Stack Encoding. Section 2.1.";
+  }
+
+  identity entropy-label-indicator {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the Entropy Label Indicator.";
+    reference
+      "RFC6790: The Use of Entropy Labels in MPLS Forwarding.
+       Sections 3 and 10.1.";
+  }
+
+  identity gal-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the Generic Associated Channel Label
+       (GAL).";
+    reference
+      "RFC5586: MPLS Generic Associated Channel.
+       Sections 4 and 10.";
+  }
+
+  identity oam-alert-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the OAM Alert Label.";
+    reference
+      "RFC3429: Assignment of the 'OAM Alert Label' for Multiprotocol
+       Label Switching Architecture (MPLS) Operation and Maintenance
+       (OAM) Functions.
+       Sections 3 and 6.";
+  }
+
+  identity extension-label {
+    base mpls-label-special-purpose-value;
+    description
+      "This identity represents the Extension Label.";
+    reference
+      "RFC7274: Allocating and Retiring Special-Purpose MPLS Labels.
+       Sections 3.1 and 5.";
+  }
+
+  typedef mpls-label-special-purpose {
+    type identityref {
+      base mpls-label-special-purpose-value;
+    }
+    description
+      "This type represents the special-purpose Multiprotocol Label
+       Switching (MPLS) label values.";
+    reference
+      "RFC3032: MPLS Label Stack Encoding.
+       RFC7274: Allocating and Retiring Special-Purpose MPLS
+       Labels.";
+  }
+
+  typedef mpls-label-general-use {
+    type uint32 {
+      range "16..1048575";
+    }
+    description
+      "The 20 bits label values in an MPLS label stack entry, 
+       specified in RFC3032. This label value does not include
+       the encodings of Traffic Class and TTL (time to live).
+       The label range specified by this type is for general use,
+       with special-purpose MPLS) label values excluded.";
+    reference
+      "RFC3032: MPLS Label Stack Encoding.";
   }
 
   typedef mpls-label {
-    type uint32 {
-      range "0..1048575";
+    type union {
+      type mpls-label-special-purpose;
+      type mpls-label-general-use;
     }
     description
       "The 20 bits label values in an MPLS label stack entry, 
