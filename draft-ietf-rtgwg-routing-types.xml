@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-00">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-01">
 
   <front>
 
@@ -158,6 +158,14 @@
           distribution of virtual routing and forwarding (VRF)
           information, see <xref target="RFC4364"/>, in support of
           virtual private networks (VPNs).  An example usage can be
+          found in <xref target="I-D.ietf-bess-l2vpn-yang"/>.
+
+          </t>
+          <t hangText="route-target-type"><vspace blankLines="0" />
+
+          This type defines the import and export rules of Route
+	  Targets, as descibed in Section 4.3.1 of
+	  <xref target="RFC4364"/>. An example usage can be
           found in <xref target="I-D.ietf-idr-bgp-model"/>.
 
           </t>
@@ -170,6 +178,48 @@
           generally, to identify multiple routes to the same prefix. An
           example usage can be found in <xref
           target="I-D.ietf-idr-bgp-model"/>.
+
+          </t>
+          <t hangText="ipv4-multicast-group-address"><vspace blankLines="0" />
+
+          This type defines the representation of an IPv4 multicast
+	  group address, which is in the range from 224.0.0.0 to
+	  239.255.255.255. 
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-pim-yang"/>.
+
+          </t>
+          <t hangText="ipv6-multicast-group-address"><vspace blankLines="0" />
+
+          This type defines the representation of an IPv6 multicast
+	  group address, which is in the range of FF00::/8.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-pim-yang"/>.
+
+          </t>
+          <t hangText="ip-multicast-group-address"><vspace blankLines="0" />
+
+	  This type represents an IP multicast group address and is IP
+	  version neutral. The format of the textual representation
+	  implies the IP version.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-pim-yang"/>.
+
+          </t>
+          <t hangText="ipv4-multicast-source-address"><vspace blankLines="0" />
+
+          IPv4 source address type for use in multicast control
+          protocols.  This type also allows the indication of wildcard
+          sources, i.e., "*".  An example of where this type may/will be
+          used is <xref target="I-D.ietf-pim-yang"/>.
+
+          </t>
+          <t hangText="ipv6-multicast-source-address"><vspace blankLines="0" />
+
+          IPv6 source address type for use in multicast control
+          protocols.  This type also allows the indication of wildcard
+          sources, i.e., "*".  An example of where this type may/will be
+          used is <xref target="I-D.ietf-pim-yang"/>.
 
           </t>
           <t hangText="ieee-bandwidth"><vspace blankLines="0" />
@@ -185,24 +235,6 @@
           This type identifies the IGP link type.  An example of where
           this type may/will be used is <xref
           target="I-D.ietf-ospf-yang"/>.
-
-          </t>
-          <t hangText="multicast-source-ipv4-addr-type"><vspace
-          blankLines="0" />
-
-          IPv4 source address type for use in multicast control
-          protocols.  This type also allows the indication of wildcard
-          sources, i.e., "*".  An example of where this type may/will be
-          used is <xref target="I-D.ietf-pim-yang"/>.
-
-          </t>
-          <t hangText="multicast-source-ipv6-addr-type"><vspace
-          blankLines="0" />
-
-          IPv6 source address type for use in multicast control
-          protocols.  This type also allows the indication of wildcard
-          sources, i.e., "*".  An example of where this type may/will be
-          used is <xref target="I-D.ietf-pim-yang"/>.
 
           </t>
           <t hangText="timer-multiplier"><vspace blankLines="0" />
@@ -245,13 +277,80 @@
           target="I-D.ietf-bfd-yang"/>.
 
           </t>
+          <t hangText="generalized-label"><vspace blankLines="0" />
+
+	  This type represents a generalized label for Generalized
+	  Multi-Protocol Label Switching (GMPLS) <xref
+	  target="RFC3471"/>. 
+	  The Generalized Label does not identify its type, which is
+	  known from the context.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-teas-yang-te"/>.
+
+          </t>
+          <t hangText="mpls-label-special-purpose"><vspace blankLines="0" />
+
+	  This type represents the special-purpose Multiprotocol Label
+	  Switching (MPLS) label values <xref target="RFC7274"/>. 
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-mpls-base-yang"/>.
+
+          </t>
+          <t hangText="mpls-label-general-use"><vspace blankLines="0" />
+
+	  The 20 bits label values in an MPLS label stack entry, 
+	  specified in  <xref target="RFC3032"/>. This label value
+	  does not include 
+	  the encodings of Traffic Class and TTL (time to live).
+	  The label range specified by this type is for general use,
+	  with special-purpose MPLS label values excluded.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-mpls-base-yang"/>.
+
+          </t>
+          <t hangText="mpls-label"><vspace blankLines="0" />
+
+	  The 20 bits label values in an MPLS label stack entry, 
+	  specified in  <xref target="RFC3032"/>. This label value
+	  does not include 
+	  the encodings of Traffic Class and TTL (time to live).
+	  The label range specified by this type covers the general
+	  use values and the special-purpose label values.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-mpls-base-yang"/>.
+
+          </t>
         </list>
+      </t>
+
+      <t>
+        This document defines the following YANG groupings:
+        <list style="hanging">
+          <t hangText="mpls-label-stack"><vspace blankLines="0" />
+
+	  This grouping defines a reusable collection of schema nodes
+	  representing an MPLS label stack <xref target="RFC3032"/>.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-mpls-base-yang"/>.
+
+          </t>
+          <t hangText="vpn-route-target-rules"><vspace blankLines="0" />
+
+	  This grouping defines a reusable collection of schema nodes
+	  representing Route Target import-export rules
+	  used in the BGP enabled Virtual Private Networks (VPNs).
+	  <xref target="RFC4364"/><xref target="RFC4664"/>.
+	  An example usage can be found in 
+	  <xref target="I-D.ietf-bess-l2vpn-yang"/>.
+
+          </t>
+	</list>
       </t>
     </section>
 
     <section title="YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-02-10.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-02-16.yang"
 module ietf-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -274,7 +373,7 @@ module ietf-routing-types {
     "This module contains a collection of YANG data types
      considered generally useful for routing protocols.";
 
-  revision 2017-02-10 {
+  revision 2017-02-16 {
     description
       "Initial revision.";
     reference
@@ -870,7 +969,7 @@ module ietf-routing-types {
        specified in RFC3032. This label value does not include
        the encodings of Traffic Class and TTL (time to live).
        The label range specified by this type is for general use,
-       with special-purpose MPLS) label values excluded.";
+       with special-purpose MPLS label values excluded.";
     reference
       "RFC3032: MPLS Label Stack Encoding.";
   }
@@ -909,7 +1008,7 @@ module ietf-routing-types {
              the label stack with a smaller ID.";
         }
         leaf label {
-          type mpls-label;
+          type rt-types:mpls-label;
           description
             "Label value.";
         }
@@ -934,6 +1033,32 @@ module ietf-routing-types {
       }
     }
   } // mpls-label-stack
+
+  grouping vpn-route-target-rules {
+    description
+      "A grouping that specifies Route Target import-export rules
+       used in the BGP enabled Virtual Private Networks (VPNs).";
+    reference
+      "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).
+       RFC4664: Framework for Layer 2 Virtual Private Networks
+       (L2VPNs)";
+    list vpn-target {
+      key route-target;
+      description 
+        "List of Route Targets.";
+      leaf route-target {
+        type rt-types:route-target;
+        description 
+          "Route Target value";
+      }
+      leaf route-target-type {
+        type rt-types:route-target-type;
+        mandatory true;
+        description 
+          "Import/export type of the Route Target.";
+      }
+    }
+  } // vpn-route-target-rules
 }
 <CODE ENDS>
         ]]></artwork></figure>
@@ -1022,9 +1147,16 @@ module ietf-routing-types {
       <?rfc include="reference.I-D.ietf-ospf-yang.xml"?>
       <?rfc include="reference.I-D.ietf-pim-yang.xml"?>
       <?rfc include="reference.I-D.ietf-teas-yang-rsvp.xml"?>
+      <?rfc include="reference.I-D.ietf-teas-yang-te.xml"?>
+      <?rfc include="reference.I-D.ietf-bess-l2vpn-yang.xml"?>
+      <?rfc include="reference.I-D.ietf-mpls-base-yang.xml"?>
+      <?rfc include="reference.RFC.3032"?>
       <?rfc include="reference.RFC.3209"?>
+      <?rfc include="reference.RFC.3471"?>
       <?rfc include="reference.RFC.4364"?>
+      <?rfc include="reference.RFC.4664"?>
       <?rfc include="reference.RFC.5880"?>
+      <?rfc include="reference.RFC.7274"?>
     </references>
 
   </back>
