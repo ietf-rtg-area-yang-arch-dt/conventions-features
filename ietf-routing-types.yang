@@ -20,7 +20,7 @@ module ietf-routing-types {
     "This module contains a collection of YANG data types
      considered generally useful for routing protocols.";
 
-  revision 2017-02-16 {
+  revision 2017-02-19 {
     description
       "Initial revision.";
     reference
@@ -242,7 +242,7 @@ module ietf-routing-types {
       "A route target is an 8-octet BGP extended community
        initially identifying a set of sites in a BGP
        VPN (RFC 4364). However, it has since taken on a more
-       general role in BGP route filtering. 
+       general role in BGP route filtering.
        A route target consists of three fields:
        a 2-octet type field, an administrator field,
        and an assigned number field.
@@ -307,9 +307,9 @@ module ietf-routing-types {
     }
     description
       "A route distinguisher is an 8-octet value used to distinguish
-       routes from different BGP VPNs (RFC 4364). A route distinguisher
-       consists of three fields: A 2-octet type field, an
-       administrator field, and an assigned number field.
+       routes from different BGP VPNs (RFC 4364). A route
+       distinguisher consists of three fields: A 2-octet type field,
+       an administrator field, and an assigned number field.
        According to the data formats for type 0, 1, and 2 defined in
        RFC4364, the encoding pattern is defined as:
 
@@ -332,7 +332,7 @@ module ietf-routing-types {
     description
       "This type represents an IPv4 multicast group address,
        which is in the range from 224.0.0.0 to 239.255.255.255.";
-    reference 
+    reference
       "RFC1112: Host Extensions for IP Multicasting.";
   }
 
@@ -344,7 +344,7 @@ module ietf-routing-types {
     description
       "This type represents an IPv6 multicast group address,
        which is in the range of FF00::/8.";
-    reference 
+    reference
       "RFC4291: IP Version 6 Addressing Architecture. Sec 2.7.
        RFC7346: IPv6 Multicast Address Scopes.";
   }
@@ -612,7 +612,7 @@ module ietf-routing-types {
       range "16..1048575";
     }
     description
-      "The 20 bits label values in an MPLS label stack entry, 
+      "The 20 bits label values in an MPLS label stack entry,
        specified in RFC3032. This label value does not include
        the encodings of Traffic Class and TTL (time to live).
        The label range specified by this type is for general use,
@@ -627,7 +627,7 @@ module ietf-routing-types {
       type mpls-label-general-use;
     }
     description
-      "The 20 bits label values in an MPLS label stack entry, 
+      "The 20 bits label values in an MPLS label stack entry,
        specified in RFC3032. This label value does not include
        the encodings of Traffic Class and TTL (time to live).";
     reference
@@ -681,7 +681,7 @@ module ietf-routing-types {
     }
   } // mpls-label-stack
 
-  grouping vpn-route-target-rules {
+  grouping vpn-route-targets {
     description
       "A grouping that specifies Route Target import-export rules
        used in the BGP enabled Virtual Private Networks (VPNs).";
@@ -691,19 +691,19 @@ module ietf-routing-types {
        (L2VPNs)";
     list vpn-target {
       key route-target;
-      description 
+      description
         "List of Route Targets.";
       leaf route-target {
         type rt-types:route-target;
-        description 
+        description
           "Route Target value";
       }
       leaf route-target-type {
         type rt-types:route-target-type;
         mandatory true;
-        description 
+        description
           "Import/export type of the Route Target.";
       }
     }
-  } // vpn-route-target-rules
+  } // vpn-route-targets
 }
