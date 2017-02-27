@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-01">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-02">
 
   <front>
 
@@ -222,7 +222,7 @@
           used is <xref target="I-D.ietf-pim-yang"/>.
 
           </t>
-          <t hangText="ieee-bandwidth"><vspace blankLines="0" />
+          <t hangText="bandwidth-ieee-float32"><vspace blankLines="0" />
 
           Bandwidth in IEEE 754 floating point 32-bit binary format
           <xref target="IEEE754"/>. Commonly used in Traffic Engineering
@@ -334,7 +334,7 @@
 	  <xref target="I-D.ietf-mpls-base-yang"/>.
 
           </t>
-          <t hangText="vpn-route-target-rules"><vspace blankLines="0" />
+          <t hangText="vpn-route-targets"><vspace blankLines="0" />
 
 	  This grouping defines a reusable collection of schema nodes
 	  representing Route Target import-export rules
@@ -350,7 +350,7 @@
 
     <section title="YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-02-19.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-02-27.yang"
 module ietf-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -373,7 +373,7 @@ module ietf-routing-types {
     "This module contains a collection of YANG data types
      considered generally useful for routing protocols.";
 
-  revision 2017-02-19 {
+  revision 2017-02-27 {
     description
       "Initial revision.";
     reference
@@ -742,12 +742,12 @@ module ietf-routing-types {
   }
 
   /*** collection of types common to protocols ***/
-  typedef ieee-bandwidth {
+  typedef bandwidth-ieee-float32 {
     type string {
       pattern
         '0[xX](0((\.0?)?[pP](\+)?0?|(\.0?))|'
       + '1(\.([\da-fA-F]{0,5}[02468aAcCeE]?)?)?[pP](\+)?(12[0-7]|'
-      + '1[01]\d|0?\d?\d)?)|0[xX][\da-fA-F]{1,8}';
+      + '1[01]\d|0?\d?\d)?)';
     }
     description
       "Bandwidth in IEEE 754 floating point 32-bit binary format:
