@@ -301,6 +301,174 @@ module ietf-routing-types {
          Address Family - IANA Registry Assigned Number: 16395";
   }
 
+  /*** Subsequent Address Family for Multi-Protocol BGP */
+  identity bgp-safi {
+    description
+      "Base identity from which identities describing BGP 
+       Subsequent Address Family Identifier (SAFI) - RFC 4760.";
+  }
+
+  identity unicast-safi {
+    base bgp-safi;
+    description
+      "Unicast SAFI -
+       IANA Registry Assigned Number: 1";
+  }
+
+  identity multicast-safi {
+    base bgp-safi;
+    description
+      "Multicast SAFI -
+       IANA Registry Assigned Number: 2";
+  }
+
+  identity labeled-unicast-safi {
+    base bgp-safi;
+    description
+      "Labeled Unicast SAFI -
+       IANA Registry Assigned Number: 4";
+  }
+
+  identity multicast-vpn-safi {
+    base bgp-safi;
+    description
+      "Multicast VPN SAFI -
+       IANA Registry Assigned Number: 5";
+  }
+
+  identity pseudowire-safi {
+    base bgp-safi;
+    description
+      "Multi-segment Pseudowire VPN SAFI -
+       IANA Registry Assigned Number: 6";
+  }
+
+  identity tunnel-enap-safi {
+    base bgp-safi;
+    description
+      "Tunnel Encap SAFI -
+       IANA Registry Assigned Number: 7";
+  }
+
+  identity mcast-vpls-safi {
+    base bgp-safi;
+    description
+      "Multicast Virtual Private LAN Service (VPLS) SAFI -
+       IANA Registry Assigned Number: 8";
+  }
+
+  identity tunnel-safi {
+    base bgp-safi;
+    description
+      "Tunnel SAFI -
+       IANA Registry Assigned Number: 64";
+  }
+
+  identity vpls-safi {
+    base bgp-safi;
+    description
+      "Virtual Private LAN Service (VPLS) SAFI -
+       IANA Registry Assigned Number: 65";
+  }
+
+  identity mdt-safi {
+    base bgp-safi;
+    description
+      "Multicast Distribution Tree (MDT) SAFI -
+       IANA Registry Assigned Number: 66";
+  }
+
+  identity v4-over-v6-safi {
+    base bgp-safi;
+    description
+      "IPv4 over IPv6 SAFI -
+       IANA Registry Assigned Number: 67";
+  }
+
+  identity v6-over-v4-safi {
+    base bgp-safi;
+    description
+      "IPv6 over IPv4 SAFI -
+       IANA Registry Assigned Number: 68";
+  }
+
+  identity l1-vpn-auto-discovery-safi {
+    base bgp-safi;
+    description
+      "Layer-1 VPN Auto Discovery SAFI -
+       IANA Registry Assigned Number: 69";
+  }
+
+  identity evpn-safi {
+    base bgp-safi;
+    description
+      " thernet VPN (EVPN) SAFI -
+       IANA Registry Assigned Number: 70";
+  }
+
+  identity bgp-ls-safi {
+    base bgp-safi;
+    description
+      "BGP Link-State (BGP-LS) SAFI -
+       IANA Registry Assigned Number: 71";
+  }
+
+  identity bgp-ls-vpn-safi {
+    base bgp-safi;
+    description
+      "BGP Link-State (BGP-LS) VPN SAFI -
+       IANA Registry Assigned Number: 72";
+  }
+
+  identity sr-te-safi {
+    base bgp-safi;
+    description
+      "Segment Routing - Traffic Engineering (SR-TE) SAFI -
+       IANA Registry Assigned Number: 73";
+  }
+
+  identity labeled-vpn-safi {
+    base bgp-safi;
+    description
+      "MPLS Labeled VPN SAFI -
+       IANA Registry Assigned Number: 128";
+  }
+
+  identity multicast-mpls-vpn-safi {
+    base bgp-safi;
+    description
+      "Multicast for BGP/MPLS IP VPN SAFI -
+       IANA Registry Assigned Number: 129";
+  }
+
+  identity route-target-safi {
+    base bgp-safi;
+    description
+      "Route Target SAFI -
+       IANA Registry Assigned Number: 132";
+  }
+
+  identity ipv4-flow-spec-safi {
+    base bgp-safi;
+    description
+      "IPv4 Flow Specification SAFI -
+       IANA Registry Assigned Number: 133";
+  }
+
+  identity vpnv4-flow-spec-safi {
+    base bgp-safi;
+    description
+      "IPv4 VPN Flow Specification SAFI -
+       IANA Registry Assigned Number: 134";
+  }
+
+  identity vpn-auto-discovery-safi {
+    base bgp-safi;
+    description
+      "VPN Auto-Discovery SAFI -
+       IANA Registry Assigned Number: 140";
+  }
+
   /*** collection of types related to VPN ***/
   typedef route-target {
     type string {
@@ -580,6 +748,24 @@ module ietf-routing-types {
     }
     units milliseconds;
     description "Timer value type, in milliseconds.";
+  }
+
+  typedef percentage {
+      type uint8 {
+          range "0..100";
+      }
+     description
+         "Integer indicating a percentage value";
+  }
+
+  typedef timeticks64 {
+      type uint64;
+     description
+      "This type is based on the timeticks type defined in
+      RFC 6991, but with 64-bit width.  It represents the time,
+      modulo 2^64, in hundredths of a second between two epochs.";
+     reference
+         "RFC 6991 - Common YANG Data Types";
   }
 
   /*** collection of types related to MPLS/GMPLS ***/
