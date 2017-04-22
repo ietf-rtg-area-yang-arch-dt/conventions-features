@@ -402,7 +402,7 @@ module ietf-routing-types {
   identity evpn-safi {
     base bgp-safi;
     description
-      " thernet VPN (EVPN) SAFI -
+      "Ethernet VPN (EVPN) SAFI -
        IANA Registry Assigned Number: 70";
   }
 
