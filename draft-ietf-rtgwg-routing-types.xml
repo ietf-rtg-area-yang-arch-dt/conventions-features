@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-02">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-03">
 
   <front>
 
@@ -132,14 +132,18 @@
 
     <section title="Overview">
       <t>
-        This document defines the following data types:
+        This document defines the two models for common routing types, 
+        ietf-routing-types and iana-routing-types. The only module imports
+        are from <xref target="RFC6021"/>. The ietf-routing-types
+        model contains common routing types other than those corresponding 
+        directly to IANA mappings. These include: 
         <list style="hanging">
           <t hangText="router-id"><vspace blankLines="0" />
 
           Router Identifiers are commonly used to identify a nodes in
           routing and other control plane protocols.  An example usage
           of router-id can be found in <xref
-          target="I-D.ietf-ospf-yang"/>.
+         target="I-D.ietf-ospf-yang"/>.
 
           </t>
           <t hangText="address-family"><vspace blankLines="0" />
@@ -277,6 +281,21 @@
           target="I-D.ietf-bfd-yang"/>.
 
           </t>
+          <t hangText="percentage"><vspace blankLines="0" />
+
+          This type defines a percentage with a range of 0-100%.
+	  An example usage can be
+          found in <xref target="I-D.ietf-idr-bgp-model"/>.
+          </t>
+
+          <t hangText="timeticks64"><vspace blankLines="0" />
+          This type is based on the timeticks type defined in
+          <xref target="RFC6991"/> but with 64-bit precision.  
+          It represents the time in hundredths of a second 
+          between two epochs. An example usage can be
+          found in <xref target="I-D.ietf-idr-bgp-model"/>.
+          </t>
+
           <t hangText="generalized-label"><vspace blankLines="0" />
 
 	  This type represents a generalized label for Generalized
@@ -346,11 +365,34 @@
           </t>
 	</list>
       </t>
+      <t>
+        The iana-routing-types
+        model contains common routing types corresponding 
+        directly to IANA mappings. These include: 
+        <list style="hanging">
+          <t hangText="address-family"><vspace blankLines="0" />
+
+          This type defines values for use in address family
+          identifiers.  The values are based on the IANA
+          <eref
+              target="http://www.iana.org/assignments/address-family-numbers/address-family-numbers.xhtml">
+          Address  Family Numbers Registry</eref>. An example usage can be found
+          in  <xref target="I-D.ietf-idr-bgp-model"/>.
+          </t>
+          <t hangText="subsequent-address-family"><vspace blankLines="0" />
+          This type defines values for use in subsequent address family (SAFI)
+          identifiers.  The values are based on the IANA
+          <eref
+              target="https://www.iana.org/assignments/safi-namespace/safi-namespace.xhtml#safi-namespace-2">
+          Subsequent Address Family Identifiers Registry</eref>.
+          </t>
+	</list>
+      </t>
     </section>
 
-    <section title="YANG Module">
+    <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-02-27.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-05-10.yang"
 module ietf-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -371,9 +413,28 @@ module ietf-routing-types {
 
   description
     "This module contains a collection of YANG data types
-     considered generally useful for routing protocols.";
+     considered generally useful for routing protocols.
 
-  revision 2017-02-27 {
+     Copyright (c) 2017 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and
+     'OPTIONAL' in the module text are to be interpreted as described
+     in RFC 2119.
+
+     This version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.";
+
+
+  revision 2017-05-10 {
     description
       "Initial revision.";
     reference
@@ -387,190 +448,6 @@ module ietf-routing-types {
       "A 32-bit number in the dotted quad format assigned to each
        router. This number uniquely identifies the router within an
        Autonomous System.";
-  }
-
-  // address-family
-  identity address-family {
-    description
-      "Base identity from which identities describing address
-       families are derived.";
-  }
-
-  identity ipv4 {
-    base address-family;
-    description
-      "This identity represents IPv4 address family.";
-  }
-
-  identity ipv6 {
-    base address-family;
-    description
-      "This identity represents IPv6 address family.";
-  }
-
-  //The rest of the values deinfed in the IANA registry
-
-  identity nsap {
-    base address-family;
-    description
-      "Address family from IANA registry.";
-  }
-  identity hdlc {
-    base address-family;
-    description
-      "(8-bit multidrop)
-        Address family from IANA registry.";
-  }
-  identity bbn1822 {
-    base address-family;
-    description
-      "AHIP (BBN report #1822)
-       Address family from IANA registry.";
-  }
-  identity ieee802 {
-    base address-family;
-    description
-      "(includes all 802 media plus Ethernet canonical format)
-       Address family from IANA registry.";
-  }
-  identity e163 {
-    base address-family;
-    description
-      "Address family from IANA registry.";
-  }
-  identity e164 {
-    base address-family;
-    description
-      "SMDS, Frame Relay, ATM
-       Address family from IANA registry.";
-  }
-  identity f69 {
-    base address-family;
-    description
-      "(Telex)
-       Address family from IANA registry.";
-  }
-  identity x121 {
-    base address-family;
-    description
-      "(X.25, Frame Relay)
-       Address family from IANA registry.";
-  }
-  identity ipx {
-    base address-family;
-    description
-      "Address family from IANA registry.";
-  }
-  identity appletalk {
-    base address-family;
-    description
-      "Address family from IANA registry.";
-  }
-  identity decnet-iv {
-    base address-family;
-    description
-      "Decnet IV
-       Address family from IANA registry.";
-  }
-  identity vines {
-    base address-family;
-    description
-      "Banyan Vines
-       Address family from IANA registry.";
-  }
-  identity e164-nsap {
-    base address-family;
-    description
-      "E.164 with NSAP format subaddress
-       Address family from IANA registry.";
-  }
-  identity dns {
-    base address-family;
-    description
-      "Domain Name System
-       Address family from IANA registry.";
-  }
-  identity dn {
-    base address-family;
-    description
-      "Distinguished Name
-       Address family from IANA registry.";
-  }
-  identity as-num {
-    base address-family;
-    description
-      "AS Number
-       Address family from IANA registry.";
-  }
-  identity xtp-v4 {
-    base address-family;
-    description
-      "XTP over IPv4
-       Address family from IANA registry.";
-  }
-  identity xtp-v6 {
-    base address-family;
-    description
-      "XTP over IPv6
-       Address family from IANA registry.";
-  }
-  identity xtp {
-    base address-family;
-    description
-      "XTP native mode XTP
-       Address family from IANA registry.";
-  }
-  identity fc-port {
-    base address-family;
-    description
-      "Fibre Channel World-Wide Port Name
-       Address family from IANA registry.";
-  }
-  identity fc-node {
-    base address-family;
-    description
-      "Fibre Channel World-Wide Node Name
-       Address family from IANA registry.";
-  }
-  identity gwid {
-    base address-family;
-    description
-      "Address family from IANA registry.";
-  }
-  identity l2vpn {
-    base address-family;
-    description
-      "Address family from IANA registry.";
-  }
-  identity mpls-tp-section-eid {
-    base address-family;
-    description
-      "MPLS-TP Section Endpoint Identifier
-       Address family from IANA registry.";
-  }
-  identity mpls-tp-lsp-eid {
-    base address-family;
-    description
-      "MPLS-TP LSP Endpoint Identifier
-       Address family from IANA registry.";
-  }
-  identity mpls-tp-pwe-eid {
-    base address-family;
-    description
-      "MPLS-TP Pseudowire Endpoint Identifier
-       Address family from IANA registry.";
-  }
-  identity mt-v4 {
-    base address-family;
-    description
-      "Multi-Topology IPv4.
-       Address family from IANA registry.";
-  }
-  identity mt-v6 {
-    base address-family;
-    description
-      "Multi-Topology IPv6.
-       Address family from IANA registry.";
   }
 
   /*** collection of types related to VPN ***/
@@ -708,9 +585,9 @@ module ietf-routing-types {
       type ipv6-multicast-group-address;
     }
     description
-     "This type represents an IP multicast group address and is IP
-      version neutral. The format of the textual representation
-      implies the IP version.";
+     "This type represents a version-neutral IP multicast group
+      address. The format of the textual representation implies
+      the IP version.";
   }
 
   typedef ipv4-multicast-source-address {
@@ -754,17 +631,17 @@ module ietf-routing-types {
        (-1)**(S) * 2**(Exponent-127) * (1 + Fraction),
        where Exponent uses 8 bits, and Fraction uses 23 bits.
        The units are octets per second.
-       The encoding format is the external hexadecimal-significand
-       character sequences specified in IEEE 754 and C99,
-       restricted to be normalized, non-negative, and non-fraction:
-       0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
+       The encoding format is the external hexadecimal-significant
+       character sequences specified in IEEE 754 and C99. The
+       format is restricted to be normalized, non-negative, and
+       non-fraction: 0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
        where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
        integers in the range of [0..127].
        When six hexadecimal digits are used for 'hhhhhh' or 'HHHHHH',
        the least significant digit must be an even number.
        'x' and 'X' indicate hexadecimal; 'p' and 'P' indicate power
-       of two.
-       Some examples are: 0x0p0, 0x1p10, and 0x1.abcde2p+20";
+       of two. Some examples are: 0x0p0, 0x1p10, and
+       0x1.abcde2p+20";
     reference
       "IEEE Std 754-2008: IEEE Standard for Floating-Point
        Arithmetic.";
@@ -815,7 +692,7 @@ module ietf-routing-types {
       }
     }
     units seconds;
-    description "Timer value type, in seconds (16 bit range).";
+    description "Timer value type, in seconds (16-bit range).";
   }
 
   typedef timer-value-seconds32 {
@@ -833,7 +710,7 @@ module ietf-routing-types {
       }
     }
     units seconds;
-    description "Timer value type, in seconds (32 bit range).";
+    description "Timer value type, in seconds (32-bit range).";
   }
 
   typedef timer-value-milliseconds {
@@ -854,15 +731,31 @@ module ietf-routing-types {
     description "Timer value type, in milliseconds.";
   }
 
+  typedef percentage {
+      type uint8 {
+          range "0..100";
+      }
+     description
+         "Integer indicating a percentage value";
+  }
+
+  typedef timeticks64 {
+      type uint64;
+     description
+      "This type is based on the timeticks type defined in
+      RFC 6991, but with 64-bit width.  It represents the time,
+      modulo 2^64, in hundredths of a second between two epochs.";
+     reference
+         "RFC 6991 - Common YANG Data Types";
+  }
+
   /*** collection of types related to MPLS/GMPLS ***/
   typedef generalized-label {
     type binary;
     description
       "Generalized label. Nodes sending and receiving the
-       Generalized Label know the kinds of link they are
-       using. Hence, the Generalized Label does not identify
-       its type.  Instead, nodes are expected to know from
-       the context and type of label to expect.";
+       Generalized Label are aware of the link-specific
+       label context and type.";
     reference "RFC3471: Section 3.2";
   }
 
@@ -965,7 +858,7 @@ module ietf-routing-types {
       range "16..1048575";
     }
     description
-      "The 20 bits label values in an MPLS label stack entry,
+      "The 20-bit label values in an MPLS label stack entry,
        specified in RFC3032. This label value does not include
        the encodings of Traffic Class and TTL (time to live).
        The label range specified by this type is for general use,
@@ -980,7 +873,7 @@ module ietf-routing-types {
       type mpls-label-general-use;
     }
     description
-      "The 20 bits label values in an MPLS label stack entry,
+      "The 20-bit label values in an MPLS label stack entry,
        specified in RFC3032. This label value does not include
        the encodings of Traffic Class and TTL (time to live).";
     reference
@@ -1032,7 +925,7 @@ module ietf-routing-types {
         }
       }
     }
-  } // mpls-label-stack
+  }
 
   grouping vpn-route-targets {
     description
@@ -1058,7 +951,477 @@ module ietf-routing-types {
           "Import/export type of the Route Target.";
       }
     }
-  } // vpn-route-targets
+  } 
+}
+<CODE ENDS>
+        ]]></artwork></figure>
+    </section>
+
+    <section title="IANA Routing Types YANG Module">
+      <figure><artwork><![CDATA[
+<CODE BEGINS> file "iana-routing-types@2017-05-10.yang"
+module iana-routing-types {
+
+  namespace "urn:ietf:params:xml:ns:yang:iana-routing-types";
+  prefix "iana-rt-types";
+
+  organization "IETF Routing Area Working Group (rtgwg)";
+
+  contact
+      "Routing Area Working Group - <rtgwg@ietf.org>";
+
+  description
+    "This module contains a collection of YANG data types
+     considered defined by IANA and used for routing 
+     protocols.
+
+     Copyright (c) 2017 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and
+     'OPTIONAL' in the module text are to be interpreted as described
+     in RFC 2119.
+
+     This version of this YANG module is part of RFC XXXX;
+     see the RFC itself for full legal notices.";
+
+  revision 2017-05-10 {
+    description
+      "Initial revision.";
+    reference
+      "RFC TBD: IANA Routing YANG Data Types";
+  }
+
+  /*** Collection of IANA types related to routing ***/
+
+  /*** IANA address family Identies ***/
+  identity address-family {
+    description
+      "Base identity from which identities describing address
+       families are derived.";
+  }
+  identity ipv4 {
+    base address-family;
+    description
+        "IPv4 Address Family - IANA Registry Assigned Number: 1";
+  }
+  identity ipv6 {
+    base address-family;
+    description
+        "IPv6 Address Family - IANA Registry Assigned Number: 2";
+  }
+  identity nsap {
+    base address-family;
+    description
+        "OSI Network Service Access Point (NSAP) Address Family -
+         IANA Registry Assigned Number: 3";
+  }
+  identity hdlc {
+    base address-family;
+    description
+        "High-Level Data Link Control (HDLC) Address Family -
+         IANA Registry Assigned Number: 4";
+  }
+  identity bbn1822 {
+    base address-family;
+    description
+        "Bolt, Beranek, and Newman Report 1822 (BBN 1822)
+         Address Family - IANA Registry Assigned Number: 5";
+  }
+  identity ieee802 {
+    base address-family;
+    description
+        "IEEE 802 Committee Address Family (aka, MAC address) - 
+         IANA Registry Assigned Number: 6";
+  }
+  identity e163 {
+    base address-family;
+    description
+        "ITU-T E.163 Address Family - 
+         IANA Registry Assigned Number: 7";
+  }
+  identity e164 {
+    base address-family;
+    description
+        "ITU-T E.164 (SMDS, Frame Relay, ATM) Address Family -
+         IANA Registry Assigned Number: 8";
+  }
+  identity f69 {
+    base address-family;
+    description
+        "ITU-T F.69 (Telex) Address Family -
+         IANA Registry Assigned Number: 9";
+  }
+  identity x121 {
+    base address-family;
+    description
+        "ITU-T X.121 (X.25, Frame Relay) Address Family -
+         IANA Registry Assigned Number: 10";
+  }
+  identity ipx {
+    base address-family;
+    description
+        "Novell Internetwork Packet Exchange (IPX) 
+         Address Family - IANA Registry Assigned Number: 11";
+  }
+  identity appletalk {
+    base address-family;
+    description
+        "Apple AppleTalk Address Family - 
+         IANA Registry Assigned Number: 12";
+  }
+  identity decnet-iv {
+    base address-family;
+    description
+        "Digital Equipment DECnet Phase IV Address Family - 
+         IANA Registry Assigned Number: 13";
+  }
+  identity vines {
+    base address-family;
+    description
+        "Banyan Vines Address Family - 
+         IANA Registry Assigned Number: 14";
+  }
+  identity e164-nsap {
+    base address-family;
+    description
+        "ITU-T E.164 with NSAP sub-address Address Family -
+         IANA Registry Assigned Number: 15";
+  }
+  identity dns {
+    base address-family;
+    description
+        "Domain Name System (DNS) Address Family -
+         IANA Registry Assigned Number: 16";
+  }
+  identity distinguished-name {
+    base address-family;
+    description
+        "Distinguished Name Address Family -
+         IANA Registry Assigned Number: 17";
+  }
+  identity as-num {
+    base address-family;
+    description
+        "AS Number Family -
+         IANA Registry Assigned Number: 18";
+  }
+  identity xtp-v4 {
+    base address-family;
+    description
+        "Xpress Transport Protocol (XTP) over IPv4 
+         Address Family - IANA Registry Assigned Number: 19";
+  }
+  identity xtp-v6 {
+    base address-family;
+    description
+        "Xpress Transport Protocol (XTP) over IPv4 
+         Address Family - IANA Registry Assigned Number: 20";
+  }
+  identity xtp-native {
+    base address-family;
+    description
+        "Xpress Transport Protocol (XTP) native mode 
+         Address Family - IANA Registry Assigned Number: 21";
+  }
+  identity fc-port {
+    base address-family;
+    description
+        "Fibre Channel (FC) World-Wide Port Name 
+         Address Family - IANA Registry Assigned Number: 22";
+  }
+  identity fc-node {
+    base address-family;
+    description
+        "Fibre Channel (FC) World-Wide Node Name
+         Address Family - IANA Registry Assigned Number: 23";
+  }
+  identity gwid {
+    base address-family;
+    description
+        "ATM Gateway Identifier (GWID) Number Family -
+         IANA Registry Assigned Number: 24";
+  }
+  identity l2vpn {
+    base address-family;
+    description
+        "Layer-2 VPN (L2VPN) Address Family - 
+         IANA Registry Assigned Number: 25";
+  }
+  identity mpls-tp-section-eid {
+    base address-family;
+    description
+        "MPLS-TP Section Endpoint Identifier Address Family -
+         IANA Registry Assigned Number: 26";
+  }
+  identity mpls-tp-lsp-eid {
+    base address-family;
+    description
+        "MPLS-TP LSP Endpoint Identifier Address Family - 
+         IANA Registry Assigned Number: 27";
+  }
+  identity mpls-tp-pwe-eid {
+    base address-family;
+    description
+        "MPLS-TP Pseudowire Endpoint Identifier 
+         Address Family - IANA Registry Assigned Number: 28";
+  }
+  identity mt-v4 {
+    base address-family;
+    description
+        "Multi-Topology IPv4 Address Family - 
+         Address Family - IANA Registry Assigned Number: 29";
+  }
+  identity mt-v6 {
+    base address-family;
+    description
+        "Multi-Topology IPv6 Address Family - 
+         Address Family - IANA Registry Assigned Number: 30";
+  }
+  identity eigrp-common-sf {
+    base address-family;
+    description
+        "Enhanced Interior Gateway Routing Protocol (EIGRP) 
+         Common Service Family Address Family - 
+         IANA Registry Assigned Number: 16384";
+  }
+  identity eigrp-v4-sf {
+    base address-family;
+    description
+        "Enhanced Interior Gateway Routing Protocol (EIGRP) 
+         IPv4 Service Family Address Family - 
+         IANA Registry Assigned Number: 16385";
+  }
+  identity eigrp-v6-sf {
+    base address-family;
+    description
+        "Enhanced Interior Gateway Routing Protocol (EIGRP) 
+         IPv6 Service Family Address Family - 
+         IANA Registry Assigned Number: 16386";
+  }
+  identity lcaf {
+    base address-family;
+    description
+        "LISP Canonical Address Format (LCAF) 
+         Address Family - IANA Registry Assigned Number: 16387";
+  }
+  identity bgp-ls {
+    base address-family;
+    description
+        "Border Gatway Protocol - Link State (BGP-LS)
+         Address Family - IANA Registry Assigned Number: 16388";
+  }
+  identity mac-48 {
+    base address-family;
+    description
+        "IEEE 48-bit Media Access Control (MAC) 
+         Address Family - IANA Registry Assigned Number: 16389";
+  }
+  identity mac-64 {
+    base address-family;
+    description
+        "IEEE 64-bit Media Access Control (MAC) 
+         Address Family - IANA Registry Assigned Number: 16390";
+  }
+  identity trill-oui {
+    base address-family;
+    description
+        "TRILL IEEE Organizationally Unique Identifier (OUI) - 
+         Address Family - IANA Registry Assigned Number: 16391";
+  }
+  identity trill-mac-24 {
+    base address-family;
+    description
+        "TRILL Final 3 octets of 48-bit MAC address 
+         Address Family - IANA Registry Assigned Number: 16392";
+  }
+  identity trill-mac-48 {
+    base address-family;
+    description
+        "TRILL Final 5 octets of 64-bit MAC address 
+         Address Family - IANA Registry Assigned Number: 16393";
+  }
+  identity trill-rbridge-port-id {
+    base address-family;
+    description
+        "TRILL Remote Bridge (RBridge) Port ID 
+         Address Family - IANA Registry Assigned Number: 16394";
+  }
+  identity trill-nickname {
+    base address-family;
+    description
+        "TRILL Nickname
+         Address Family - IANA Registry Assigned Number: 16395";
+  }
+
+  /*** Subsequent Address Family for Multi-Protocol BGP */
+  identity bgp-safi {
+    description
+      "Base identity from which identities describing BGP 
+       Subsequent Address Family Identifier (SAFI) - RFC 4760.";
+  }
+
+  identity unicast-safi {
+    base bgp-safi;
+    description
+      "Unicast SAFI -
+       IANA Registry Assigned Number: 1";
+  }
+
+  identity multicast-safi {
+    base bgp-safi;
+    description
+      "Multicast SAFI -
+       IANA Registry Assigned Number: 2";
+  }
+
+  identity labeled-unicast-safi {
+    base bgp-safi;
+    description
+      "Labeled Unicast SAFI -
+       IANA Registry Assigned Number: 4";
+  }
+
+  identity multicast-vpn-safi {
+    base bgp-safi;
+    description
+      "Multicast VPN SAFI -
+       IANA Registry Assigned Number: 5";
+  }
+
+  identity pseudowire-safi {
+    base bgp-safi;
+    description
+      "Multi-segment Pseudowire VPN SAFI -
+       IANA Registry Assigned Number: 6";
+  }
+
+  identity tunnel-enap-safi {
+    base bgp-safi;
+    description
+      "Tunnel Encap SAFI -
+       IANA Registry Assigned Number: 7";
+  }
+
+  identity mcast-vpls-safi {
+    base bgp-safi;
+    description
+      "Multicast Virtual Private LAN Service (VPLS) SAFI -
+       IANA Registry Assigned Number: 8";
+  }
+
+  identity tunnel-safi {
+    base bgp-safi;
+    description
+      "Tunnel SAFI -
+       IANA Registry Assigned Number: 64";
+  }
+
+  identity vpls-safi {
+    base bgp-safi;
+    description
+      "Virtual Private LAN Service (VPLS) SAFI -
+       IANA Registry Assigned Number: 65";
+  }
+
+  identity mdt-safi {
+    base bgp-safi;
+    description
+      "Multicast Distribution Tree (MDT) SAFI -
+       IANA Registry Assigned Number: 66";
+  }
+
+  identity v4-over-v6-safi {
+    base bgp-safi;
+    description
+      "IPv4 over IPv6 SAFI -
+       IANA Registry Assigned Number: 67";
+  }
+
+  identity v6-over-v4-safi {
+    base bgp-safi;
+    description
+      "IPv6 over IPv4 SAFI -
+       IANA Registry Assigned Number: 68";
+  }
+
+  identity l1-vpn-auto-discovery-safi {
+    base bgp-safi;
+    description
+      "Layer-1 VPN Auto Discovery SAFI -
+       IANA Registry Assigned Number: 69";
+  }
+
+  identity evpn-safi {
+    base bgp-safi;
+    description
+      "Ethernet VPN (EVPN) SAFI -
+       IANA Registry Assigned Number: 70";
+  }
+
+  identity bgp-ls-safi {
+    base bgp-safi;
+    description
+      "BGP Link-State (BGP-LS) SAFI -
+       IANA Registry Assigned Number: 71";
+  }
+
+  identity bgp-ls-vpn-safi {
+    base bgp-safi;
+    description
+      "BGP Link-State (BGP-LS) VPN SAFI -
+       IANA Registry Assigned Number: 72";
+  }
+
+  identity sr-te-safi {
+    base bgp-safi;
+    description
+      "Segment Routing - Traffic Engineering (SR-TE) SAFI -
+       IANA Registry Assigned Number: 73";
+  }
+
+  identity labeled-vpn-safi {
+    base bgp-safi;
+    description
+      "MPLS Labeled VPN SAFI -
+       IANA Registry Assigned Number: 128";
+  }
+
+  identity multicast-mpls-vpn-safi {
+    base bgp-safi;
+    description
+      "Multicast for BGP/MPLS IP VPN SAFI -
+       IANA Registry Assigned Number: 129";
+  }
+
+  identity route-target-safi {
+    base bgp-safi;
+    description
+      "Route Target SAFI -
+       IANA Registry Assigned Number: 132";
+  }
+
+  identity ipv4-flow-spec-safi {
+    base bgp-safi;
+    description
+      "IPv4 Flow Specification SAFI -
+       IANA Registry Assigned Number: 133";
+  }
+
+  identity vpnv4-flow-spec-safi {
+    base bgp-safi;
+    description
+      "IPv4 VPN Flow Specification SAFI -
+       IANA Registry Assigned Number: 134";
+  }
 }
 <CODE ENDS>
         ]]></artwork></figure>
@@ -1079,6 +1442,12 @@ URI: urn:ietf:params:xml:ns:yang:ietf-routing-types
 Registrant Contact: The IESG.
 XML: N/A, the requested URI is an XML namespace.
 --------------------------------------------------------------------
+
+--------------------------------------------------------------------
+URI: urn:ietf:params:xml:ns:yang:iana-routing-types
+Registrant Contact: The IESG.
+XML: N/A, the requested URI is an XML namespace.
+--------------------------------------------------------------------
    </artwork></figure>
 
    <t>
@@ -1090,6 +1459,13 @@ XML: N/A, the requested URI is an XML namespace.
 name:         ietf-routing-types
 namespace:    urn:ietf:params:xml:ns:yang:ietf-routing-types
 prefix:       rt-types
+reference:    RFC XXXX
+--------------------------------------------------------------------
+
+--------------------------------------------------------------------
+name:         iana-routing-types
+namespace:    urn:ietf:params:xml:ns:yang:iana-routing-types
+prefix:       iana-rt-types
 reference:    RFC XXXX
 --------------------------------------------------------------------
       </artwork></figure>
@@ -1122,6 +1498,7 @@ reference:    RFC XXXX
     <references title="Normative References">
       <?rfc include="reference.RFC.2119"?>
       <?rfc include="reference.RFC.6020"?>
+      <?rfc include="reference.RFC.6021"?>
       <?rfc include="reference.RFC.7950"?>
     </references>
 
@@ -1156,6 +1533,7 @@ reference:    RFC XXXX
       <?rfc include="reference.RFC.4364"?>
       <?rfc include="reference.RFC.4664"?>
       <?rfc include="reference.RFC.5880"?>
+      <?rfc include="reference.RFC.6991"?>
       <?rfc include="reference.RFC.7274"?>
     </references>
 

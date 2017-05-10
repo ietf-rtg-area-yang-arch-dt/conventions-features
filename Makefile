@@ -5,7 +5,8 @@
 
 DRAFT  = draft-ietf-rtgwg-routing-types
 MODELS = \
-	 ietf-routing-types.yang 
+	 ietf-routing-types.yang \
+	 iana-routing-types.yang         
 
 #assumes standard yang modules installed in ../yang, customize as needed
 #  e.g., based on a 'cd .. ; git clone https://github.com/YangModels/yang.git'
@@ -18,12 +19,12 @@ ID_DIR	     = IDs
 REVS	    := $(shell \
 		 sed -e '/docName="/!d;s/.*docName="\([^"]*\)".*/\1/' $(DRAFT).xml | \
 		 awk -F- '{printf "%02d %02d",$$NF-1,$$NF}')
-PREV_REV    := $(word 1, $(REVS))
-REV	    := $(word 2, $(REVS))
+PREV_REV    := $(word 2, $(REVS))
+REV	    := $(word 3, $(REVS))
 OLD          = $(ID_DIR)/$(DRAFT)-$(PREV_REV)
 NEW          = $(ID_DIR)/$(DRAFT)-$(REV)
 
-TREES := $(MODELS:.yang=.tree)
+TREES := 
 
 %.tree: %.yang
 	@echo Updating $< revision date
