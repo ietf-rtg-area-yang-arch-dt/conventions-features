@@ -19,8 +19,8 @@ ID_DIR	     = IDs
 REVS	    := $(shell \
 		 sed -e '/docName="/!d;s/.*docName="\([^"]*\)".*/\1/' $(DRAFT).xml | \
 		 awk -F- '{printf "%02d %02d",$$NF-1,$$NF}')
-PREV_REV    := $(word 2, $(REVS))
-REV	    := $(word 3, $(REVS))
+PREV_REV    := $(word 3, $(REVS))
+REV	    := $(word 4, $(REVS))
 OLD          = $(ID_DIR)/$(DRAFT)-$(PREV_REV)
 NEW          = $(ID_DIR)/$(DRAFT)-$(REV)
 

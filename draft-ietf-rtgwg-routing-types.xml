@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-03">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-04">
 
   <front>
 
@@ -144,16 +144,6 @@
           routing and other control plane protocols.  An example usage
           of router-id can be found in <xref
          target="I-D.ietf-ospf-yang"/>.
-
-          </t>
-          <t hangText="address-family"><vspace blankLines="0" />
-
-          This type defines values for use in address family
-          identifiers.  The values are based on the IANA
-          <eref
-              target="http://www.iana.org/assignments/address-family-numbers/address-family-numbers.xhtml">Address
-          Family Numbers Registry</eref>. An example usage can be found
-          in  <xref target="I-D.ietf-idr-bgp-model"/>.
 
           </t>
           <t hangText="route-target"><vspace blankLines="0" />
@@ -374,17 +364,15 @@
 
           This type defines values for use in address family
           identifiers.  The values are based on the IANA
-          <eref
-              target="http://www.iana.org/assignments/address-family-numbers/address-family-numbers.xhtml">
-          Address  Family Numbers Registry</eref>. An example usage can be found
+          Address Family Numbers Registry <xref target="IANA-ADDRESS-FAMILY-REGISTRY"/>.
+          An example usage can be found
           in  <xref target="I-D.ietf-idr-bgp-model"/>.
           </t>
           <t hangText="subsequent-address-family"><vspace blankLines="0" />
           This type defines values for use in subsequent address family (SAFI)
           identifiers.  The values are based on the IANA
-          <eref
-              target="https://www.iana.org/assignments/safi-namespace/safi-namespace.xhtml#safi-namespace-2">
-          Subsequent Address Family Identifiers Registry</eref>.
+          Subsequent Address Family Identifiers (SAFI) Parameters Registry
+          <xref target="IANA-SAFI-REGISTRY"/>.
           </t>
 	</list>
       </t>
@@ -1469,6 +1457,64 @@ prefix:       iana-rt-types
 reference:    RFC XXXX
 --------------------------------------------------------------------
       </artwork></figure>
+    <section title="IANA-Maintained iana-routing-types Module">
+   <t>This document defines the initial version of the IANA-maintained
+      iana-routing-types YANG module.</t>
+   <t>The iana-routing-types YANG module is intended to reflect the 
+   "Address Family Numbers" registry <xref target="IANA-ADDRESS-FAMILY-REGISTRY"/> 
+   and "Subsequent Address Family Identifiers (SAFI) Parameters" registry 
+   <xref target="IANA-SAFI-REGISTRY"/>.</t> 
+
+   <t>IANA has added this notes to the "iana-routing-types YANG Module"
+   registry:
+
+   <figure><artwork>
+   Address Families and Subsequent Address Families must not be 
+   directly added to the iana-routing-types YANG module.  They must 
+   instead be respectively added to the "Address Family Numbers" 
+   and "Subsequent Address Family Identifiers (SAFI) Parameters" 
+   registries. 
+    </artwork></figure></t>
+
+
+   <t>When an Address Family or Subsequent Address Family is 
+      respectively added to the "Address Family Numbers" 
+      registry or the  "Subsequent Address Family Identifiers (SAFI) Parameters" 
+      registry,  a new "identity" statement must be added to the 
+      iana-routing-types YANG module.  The name of the "identity" is the 
+      same as the corresponding address family or SAFI only it willl be a 
+      valid YANG identifier in all lowercase and with hyphens separating 
+      individual words in compound identifiers. The following 
+      substatements to the "identity" statement should be defined:
+   <figure><artwork>
+   "base": Contains the value "address-family" for address families 
+           or "bgp-safi" for subsequent address families.
+
+   "status": Include only if a registration has been deprecated (use
+             the value "deprecated") or obsoleted (use the value
+             "obsolete").
+
+   "description": Replicate the description from the registry,
+                  if any.  Insert line breaks as needed so that the
+                  line does not exceed 72 characters.
+
+   "reference": Replicate the reference from the registry, if any,
+                and add the title of the document.
+    </artwork></figure></t>
+
+   <t>Unassigned or reserved values are not present in these 
+      modules.</t>
+   <t>When the iana-routing-types YANG module is updated, a 
+      new "revision" statement must be added in front of the existing 
+      revision statements.</t>
+   <t>IANA has added this new note to the the "Address Family Numbers" 
+      and "Subsequent Address Family Identifiers (SAFI) Parameters" 
+      registries:  
+   <figure><artwork>
+      When this registry is modified, the YANG module 
+      iana-routing-types must be updated as defined in RFC XXXX.
+    </artwork></figure></t>
+    </section>
     </section>
 
     <section title="Security Considerations">
@@ -1489,6 +1535,10 @@ reference:    RFC XXXX
         Bogdanovic, Ebben Aries, Lou Berger, Qin Wu, Rob Shakir,
         Xufeng Liu, and Yingzhen Qu.
       </t>
+      <t>
+         Thanks to Martin Bjorkland, Tom Petch, Stewart Bryant, and Radek Krejci for comments
+         on the model and document text.
+      </t>
     </section>
 
   </middle>
@@ -1500,6 +1550,22 @@ reference:    RFC XXXX
       <?rfc include="reference.RFC.6020"?>
       <?rfc include="reference.RFC.6021"?>
       <?rfc include="reference.RFC.7950"?>
+      <reference anchor="IANA-ADDRESS-FAMILY-REGISTRY" 
+             target="https://www.iana.org/assignments/address-family-numbers/address-family-numbers.xhtml#address-family-numbers-2">
+        <front>
+          <title>IANA Address Family Registry</title>
+          <author/>
+          <date/>
+        </front>
+       </reference>
+      <reference anchor="IANA-SAFI-REGISTRY" 
+             target="https://www.iana.org/assignments/safi-namespace/safi-namespace.xhtml#safi-namespace-2">
+        <front>
+          <title>IANA Subsequent Address Family Identities (SAFI) Parameters Registry</title>
+          <author/>
+          <date/>
+        </front>
+       </reference>
     </references>
 
     <references title="Informative References">
