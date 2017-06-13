@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-05">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-06">
 
   <front>
 
@@ -112,15 +112,6 @@
         from the built-in YANG data types. The derived types are designed to
         be the common types applicable for modeling in the routing area.
       </t>
-
-      <section title="Requirements Language">
-        <t>
-          The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-          "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY" and
-          "OPTIONAL" in this document are to be interpreted as described in
-          BCP 14, RFC 2119 <xref target="RFC2119"/>.
-        </t>
-      </section>
 
       <section title="Terminology">
         <t>
@@ -380,7 +371,7 @@
 
     <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-05-24.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-06-13.yang"
 module ietf-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
@@ -431,7 +422,7 @@ module ietf-routing-types {
 
   reference "RFC XXXX";
 
-  revision 2017-05-24 {
+  revision 2017-06-13 {
     description
       "Initial revision.";
     reference
@@ -955,7 +946,7 @@ module ietf-routing-types {
 
     <section title="IANA Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "iana-routing-types@2017-05-24.yang"
+<CODE BEGINS> file "iana-routing-types@2017-06-13.yang"
 module iana-routing-types {
 
   namespace "urn:ietf:params:xml:ns:yang:iana-routing-types";
@@ -993,7 +984,7 @@ module iana-routing-types {
 
   reference "RFC XXXX";
 
-  revision 2017-05-24 {
+  revision 2017-06-13 {
     description
       "Initial revision.";
     reference
@@ -1434,7 +1425,7 @@ module iana-routing-types {
       </t>
       <t>
         This document registers the following namespace URIs in the IETF XML
-        registry [RFC3688]:
+        registry <xref target="RFC3688"/>:
       </t>
       <figure><artwork>
 --------------------------------------------------------------------
@@ -1558,7 +1549,7 @@ reference:    RFC XXXX
   <back>
 
     <references title="Normative References">
-      <?rfc include="reference.RFC.2119"?>
+      <?rfc include="reference.RFC.3688"?>
       <?rfc include="reference.RFC.6020"?>
       <?rfc include="reference.RFC.6991"?>
       <?rfc include="reference.RFC.7950"?>

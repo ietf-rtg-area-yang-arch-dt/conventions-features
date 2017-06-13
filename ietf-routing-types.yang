@@ -48,7 +48,7 @@ module ietf-routing-types {
 
   reference "RFC XXXX";
 
-  revision 2017-05-24 {
+  revision 2017-06-13 {
     description
       "Initial revision.";
     reference
