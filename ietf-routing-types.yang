@@ -48,7 +48,7 @@ module ietf-routing-types {
 
   reference "RFC XXXX";
 
-  revision 2017-06-13 {
+  revision 2017-06-26 {
     description
       "Initial revision.";
     reference
@@ -110,8 +110,8 @@ module ietf-routing-types {
   identity gal-label {
     base mpls-label-special-purpose-value;
     description
-      "This identity represents the Generic Associated Channel Label
-       (GAL).";
+      "This identity represents the Generic Associated Channel 
+       Label (GAL).";
     reference
       "RFC5586: MPLS Generic Associated Channel.
        Sections 4 and 10.";
@@ -122,9 +122,9 @@ module ietf-routing-types {
     description
       "This identity represents the OAM Alert Label.";
     reference
-      "RFC3429: Assignment of the 'OAM Alert Label' for Multiprotocol
-       Label Switching Architecture (MPLS) Operation and Maintenance
-       (OAM) Functions.
+      "RFC3429: Assignment of the 'OAM Alert Label' for 
+       Multiprotocol Label Switching Architecture (MPLS) 
+       Operation and Maintenance (OAM) Functions.
        Sections 3 and 6.";
   }
 
@@ -133,8 +133,8 @@ module ietf-routing-types {
     description
       "This identity represents the Extension Label.";
     reference
-      "RFC7274: Allocating and Retiring Special-Purpose MPLS Labels.
-       Sections 3.1 and 5.";
+      "RFC7274: Allocating and Retiring Special-Purpose MPLS 
+       Labels.  Sections 3.1 and 5.";
   }
 
   /*** Collection of types related to routing ***/
@@ -142,8 +142,8 @@ module ietf-routing-types {
     type yang:dotted-quad;
     description
       "A 32-bit number in the dotted quad format assigned to each
-       router. This number uniquely identifies the router within an
-       Autonomous System.";
+       router. This number uniquely identifies the router within
+       an Autonomous System.";
   }
 
   /*** Collection of types related to VPN ***/
@@ -172,8 +172,8 @@ module ietf-routing-types {
        A route target consists of three fields:
        a 2-octet type field, an administrator field,
        and an assigned number field.
-       According to the data formats for type 0, 1, and 2 defined in
-       RFC4360 and RFC5668, the encoding pattern is defined as:
+       According to the data formats for type 0, 1, and 2 defined
+       in RFC4360 and RFC5668, the encoding pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
@@ -184,6 +184,36 @@ module ietf-routing-types {
     reference
       "RFC4360: BGP Extended Communities Attribute.
        RFC5668: 4-Octet AS Specific BGP Extended Community.";
+  }
+
+  typedef ipv6-route-target {
+    type string {
+      pattern 
+          '((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}'
+          + '((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|'
+          + '(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}'
+          + '(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))'
+          + ':'
+          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+          + '[0-5]?\d{0,3}\d)';
+      pattern '(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|'
+          + '((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)'
+          + ':'
+          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+          + '[0-5]?\d{0,3}\d)';
+    }
+    description
+      "An IPv6 route target is a 20-octet BGP IPv6 address 
+       specific extended community serving the same function
+       as a standard 8-octet route target only allowing for
+       an IPv6 address as the global adminstrator. The format
+       is <ipv6-address:2-octet-number>.
+
+       Some valid examples are: 2001:DB8::1:6544 and 
+       2001:DB8::5eb1:791:6b37:17958";
+    reference
+      "RFC5701: IPv6 Address Specific BGP Extended Community 
+                Attribute";
   }
 
   typedef route-target-type {
@@ -248,6 +278,77 @@ module ietf-routing-types {
        2:1234567890:203.";
     reference
       "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
+  }
+
+  typedef route-origin {
+    type string {
+      pattern
+        '(0:(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+      + '[0-5]?\d{0,3}\d):(429496729[0-5]|42949672[0-8]\d|'
+      + '4294967[01]\d{2}|429496[0-6]\d{3}|42949[0-5]\d{4}|'
+      + '4294[0-8]\d{5}|429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|'
+      + '[0-3]?\d{0,8}\d))|'
+      + '(1:(((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|'
+      + '1\d{2}|2[0-4]\d|25[0-5])):(6553[0-5]|655[0-2]\d|'
+      + '65[0-4]\d{2}|6[0-4]\d{3}|[0-5]?\d{0,3}\d))|'
+      + '(2:(429496729[0-5]|42949672[0-8]\d|4294967[01]\d{2}|'
+      + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
+      + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
+      + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+      + '[0-5]?\d{0,3}\d))|'
+      + '(([3-9a-fA-F]|[1-9a-fA-F][\da-fA-F]{1,3}):'
+      + '[\da-fA-F]{1,12})';
+    }
+    description
+      "A route origin is an 8-octet BGP extended community
+       identifying the set of sites where the BGP route
+       originated(RFC 4364). A route origin consists of three
+       fields: A 2-octet type field,  an administrator field, 
+       and an assigned number field. According to the data 
+       formats for type 0, 1, and 2 defined in RFC4364, 
+       the encoding pattern is defined as:
+
+       0:2-octet-asn:4-octet-number
+       1:4-octet-ipv4addr:2-octet-number
+       2:4-octet-asn:2-octet-number.
+       2-octet-other-hex-number:6-octet-hex-number
+
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
+       2:1234567890:203.";
+    reference
+      "RFC4360: BGP Extended Communities Attribute.
+       RFC4369: BGP/MPLS IP Virtual Private Networks (VPNs)
+       RFC5668: 4-Octet AS Specific BGP Extended Community.";
+  }
+
+  typedef ipv6-route-origin {
+    type string {
+      pattern 
+          '((:|[0-9a-fA-F]{0,4}):)([0-9a-fA-F]{0,4}:){0,5}'
+          + '((([0-9a-fA-F]{0,4}:)?(:|[0-9a-fA-F]{0,4}))|'
+          + '(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}'
+          + '(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))'
+          + ':'
+          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+          + '[0-5]?\d{0,3}\d)';
+      pattern '(([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|'
+          + '((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?)'
+          + ':'
+          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
+          + '[0-5]?\d{0,3}\d)';
+    }
+    description
+      "An IPv6 route origin is a 20-octet BGP IPv6 address 
+       specific extended community serving the same function
+       as a standard 8-octet route only only allowing for
+       an IPv6 address as the global adminstrator. The format
+       is <ipv6-address:2-octet-number>.
+
+       Some valid examples are: 2001:DB8::1:6544 and 
+       2001:DB8::5eb1:791:6b37:17958";
+    reference
+      "RFC5701: IPv6 Address Specific BGP Extended Community 
+                Attribute";
   }
 
   /*** Collection of types common to multicast ***/
@@ -445,6 +546,13 @@ module ietf-routing-types {
          "RFC 6991 - Common YANG Data Types";
   }
 
+  typedef uint24 {
+      type uint32 {
+          range "0 .. 16777215";
+      }
+      description "24-bit unsigned integer";
+  }
+
   /*** Collection of types related to MPLS/GMPLS ***/
   typedef generalized-label {
     type binary;
@@ -565,4 +673,113 @@ module ietf-routing-types {
       }
     }
   } 
+
+  grouping geo-coordinates {
+      description "Standard grouping for Geo Coordinates
+                 in routing information";
+      container geo-coordinates {
+          description "Container for Geo Coordinates";
+          leaf flags {
+              type bits {
+                  bit U {
+                      description "If the U-bit is set, it indicates that
+                     the location-uncertainty is specified, If the
+                     U-bit is clear, it indicates the
+                     location-uncertainty is unspecified.";
+                  }
+                  bit N {
+                      description "If the N-bit is set, it indicates the
+                      latitude is north relative to the Equator. If
+                      the N-bit is clear, it indicates the latitude
+                      is south of the Equator.";
+                  }
+                  bit E {
+                      description "If the E-bit is set, it indicates the
+                      longitute is east of the Prime Meridian. If
+                      the E-bit is clear, it indicates the longitude
+                      is west of the Prime Meridian.";
+                  }
+                  bit A {
+                      description "If the A-bit is set, it indicates the
+                      altitude is specified. If the A-bit is clear, 
+                      it indicates the altitude is unspecified.";
+                  }
+                  bit M {
+                      description "If the M-bit is set, it indicates the
+                      altitude is specified in meters. If the M-bit
+                      is clear, it indicates the altitude is 
+                      specified in centimeters.";
+                  }
+                  bit R {
+                      description "If the R-bit is set, it indicates the
+                      radius is specified and the encoding is for a
+                      circular area. If the R-bit is clear, it
+                      indicates the radius is unspecified and the
+                      encoding is for a single point.";
+                  }
+                  bit K {
+                      description "If the R-bit is set, it indicates the
+                      radius is specified in kilometers. If the
+                      R-bit is clear, it indicates the radius is
+                      specified in meters.";
+                  }
+              }
+              description "Bits defining granularity or semantics
+                         of Geo Coordinates fields.";
+          }
+          leaf location-uncertainty {
+              type uint16;
+              description "Number of centimeters of uncertainty for
+                 the location.";
+          }
+          leaf latitude-degrees {
+              type uint8 {
+                  range "0 .. 90";
+              }
+              description "Latitude degrees north or south of the
+                 Equator (northern or southern hemisphere,
+                 respectively).";
+          }
+          leaf latitude-milliseconds {
+              type uint24 {
+                  range "0 .. 3599999";
+              }
+              description "Latitude millisecond granularity (less
+                 than 60 minutes or a single degree).";
+          }
+          leaf longitude-degrees {
+              type uint8 {
+                  range "0 .. 180";
+              }
+              description "Longitude degrees east or westof the
+                 Prime Meridian (eastern or western hemisphere,
+                 respectively).";
+          }
+          leaf longitude-milliseconds {
+              type uint24 {
+                  range "0 .. 3599999";
+              }
+              description "Longitude millisecond granularity (less
+                 than 60 minutes or a single degree).";
+          }
+          leaf altitude {
+              type int32;
+              description "Height relative to sea level in
+                 centimeters or meters.  A negative height 
+                 indicates that the location is below sea 
+                 level.";
+          }
+          leaf radius {
+              type uint16;
+              description "Radius of a circle centered at the 
+                 specified coordinates. The radius is specified
+                 in meters unless the K-bit is specified 
+                 indicating specification in kilometers. If the 
+                 radius is specified, the geo-coordinates specify
+                 the entire area of the circle defined by the 
+                 radius and center point.";
+          }
+      }
+  }
 }
+               
