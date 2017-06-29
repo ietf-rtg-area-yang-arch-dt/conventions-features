@@ -32,7 +32,7 @@ module iana-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-06-26 {
+  revision 2017-06-29 {
     description
       "Initial revision.";
     reference "RFC TBD: IANA Routing YANG Data Types";
