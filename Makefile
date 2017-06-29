@@ -71,6 +71,7 @@ $(DRAFT).xml: $(MODELS)
 		head -$${start_stop[0]}    $@.tmp    		> $@	; \
 		echo '<CODE BEGINS> file "'$${base}'@'`date +%F`'.yang"'>> $@;\
 		cat $$model					>> $@	; \
+		echo						>> $@	; \
 		tail -n +$${start_stop[1]} $@.tmp 		>> $@	; \
 		rm -f $@.tmp 		 				; \
 	done
