@@ -19,8 +19,8 @@ ID_DIR	     = IDs
 REVS	    := $(shell \
 		 sed -e '/docName="/!d;s/.*docName="\([^"]*\)".*/\1/' $(DRAFT).xml | \
 		 awk -F- '{printf "%02d %02d",$$NF-1,$$NF}')
-PREV_REV    := $(word 6, $(REVS))
-REV	    := $(word 7, $(REVS))
+PREV_REV    := $(word 1, $(REVS))
+REV	    := $(word 2, $(REVS))
 OLD          = $(ID_DIR)/$(DRAFT)-$(PREV_REV)
 NEW          = $(ID_DIR)/$(DRAFT)-$(REV)
 
@@ -54,6 +54,7 @@ vars:
 	echo PLUGPATH=$(PLUGPATH)
 	echo PREV_REV=$(PREV_REV)
 	echo REV=$(REV)
+	echo REVS=$(REVS)
 	echo OLD=$(OLD)
 
 $(DRAFT).xml: $(MODELS)
