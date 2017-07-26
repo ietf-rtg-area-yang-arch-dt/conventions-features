@@ -378,16 +378,6 @@
 	  <xref target="I-D.ietf-bess-l2vpn-yang"/>.
 
           </t>
-          <t hangText="geo-coordinates"><vspace blankLines="0" />
-
-	  This grouping defines a reusable collection of schema nodes
-	  representing the Geo-coordinates in IETF models. 
-          The schema modes specify the location of an object
-          using the WGS-84 (World Geodetic System) reference
-          coordinate system <xref target="WGS84"/>. This is expected to 
-          used in augmentations to routing protocol models such 
-          as <xref target="I-D.ietf-ospf-yang"/>.
-          </t>
 	</list>
       </t>
       <t>
@@ -415,7 +405,7 @@
 
     <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-06-29.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-07-26.yang"
 module ietf-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
   prefix rt-types;
@@ -561,19 +551,32 @@ module ietf-routing-types {
   typedef route-target {
     type string {
       pattern
-        '(0:(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d):(429496729[0-5]|42949672[0-8]\d|'
-      + '4294967[01]\d{2}|429496[0-6]\d{3}|42949[0-5]\d{4}|'
-      + '4294[0-8]\d{5}|429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|'
-      + '[0-3]?\d{0,8}\d))|'
-      + '(1:(((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|'
-      + '1\d{2}|2[0-4]\d|25[0-5])):(6553[0-5]|655[0-2]\d|'
-      + '65[0-4]\d{2}|6[0-4]\d{3}|[0-5]?\d{0,3}\d))|'
-      + '(2:(429496729[0-5]|42949672[0-8]\d|4294967[01]\d{2}|'
-      + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
-      + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
-      + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d))';
+        '(0:(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+      + '6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]):(429496729[0-5]|'
+      + '42949672[0-8][0-9]|'
+      + '4294967[01][0-9]{2}|429496[0-6][0-9]{3}|'
+      + '42949[0-5][0-9]{4}|'
+      + '4294[0-8][0-9]{5}|429[0-3][0-9]{6}|'
+      + '42[0-8][0-9]{7}|4[01][0-9]{8}|'
+      + '[0-3]?[0-9]{0,8}[0-9]))|'
+      + '(1:((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|'
+      + '25[0-5])\.){3}([0-9]|[1-9][0-9]|'
+      + '1[0-9]{2}|2[0-4][0-9]|25[0-5])):(6553[0-5]|'
+      + '655[0-2][0-9]|'
+      + '65[0-4][0-9]{2}|6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]))|'
+      + '(2:(429496729[0-5]|42949672[0-8][0-9]|'
+      + '4294967[01][0-9]{2}|'
+      + '429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|'
+      + '4294[0-8][0-9]{5}|'
+      + '429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[01][0-9]{8}|'
+      + '[0-3]?[0-9]{0,8}[0-9]):'
+      + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+      + '6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]))'
+      + '(([3-9a-fA-F]|[1-9a-fA-F][0-9a-fA-F]{1,3}):'
+      + '[0-9a-fA-F]{1,12})';
     }
     description
       "A route target is an 8-octet BGP extended community
@@ -589,6 +592,7 @@ module ietf-routing-types {
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
+       2-octet-other-hex-number:6-octet-hex-number
 
        Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
        2:1234567890:203.";
@@ -605,13 +609,15 @@ module ietf-routing-types {
           + '(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}'
           + '(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))'
           + ':'
-          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-          + '[0-5]?\d{0,3}\d)';
+          + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+          + '6[0-4][0-9]{3}|'
+          + '[0-5]?[0-9]{0,3}[0-9])';
       pattern '((([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|'
           + '((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))'
           + ':'
-          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-          + '[0-5]?\d{0,3}\d)';
+          + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+          + '6[0-4][0-9]{3}|'
+          + '[0-5]?[0-9]{0,3}[0-9])';
     }
     description
       "An IPv6 route target is a 20-octet BGP IPv6 address
@@ -649,35 +655,48 @@ module ietf-routing-types {
     description
       "Indicates the role a route target takes
        in route filtering.";
-    reference "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
+    reference "RFC4364: BGP/MPLS IP Virtual Private Networks 
+               (VPNs).";
   }
 
   typedef route-distinguisher {
     type string {
       pattern
-        '(0:(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d):(429496729[0-5]|42949672[0-8]\d|'
-      + '4294967[01]\d{2}|429496[0-6]\d{3}|42949[0-5]\d{4}|'
-      + '4294[0-8]\d{5}|429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|'
-      + '[0-3]?\d{0,8}\d))|'
-      + '(1:(((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|'
-      + '1\d{2}|2[0-4]\d|25[0-5])):(6553[0-5]|655[0-2]\d|'
-      + '65[0-4]\d{2}|6[0-4]\d{3}|[0-5]?\d{0,3}\d))|'
-      + '(2:(429496729[0-5]|42949672[0-8]\d|4294967[01]\d{2}|'
-      + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
-      + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
-      + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d))|'
-      + '(([3-9a-fA-F]|[1-9a-fA-F][\da-fA-F]{1,3}):'
-      + '[\da-fA-F]{1,12})';
+        '(0:(6553[0-5]|655[0-2][0-9]|'
+      + '65[0-4][0-9]{2}|6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]):(429496729[0-5]|'
+      + '42949672[0-8][0-9]|'
+      + '4294967[01][0-9]{2}|429496[0-6][0-9]{3}|'
+      + '42949[0-5][0-9]{4}|'
+      + '4294[0-8][0-9]{5}|429[0-3][0-9]{6}|'
+      + '42[0-8][0-9]{7}|4[01][0-9]{8}|'
+      + '[0-3]?[0-9]{0,8}[0-9]))|'
+      + '(1:((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|'
+      + '25[0-5])\.){3}([0-9]|'
+      + '[1-9][0-9]|'
+      + '1[0-9]{2}|2[0-4][0-9]|25[0-5])):(6553[0-5]|'
+      + '655[0-2][0-9]|'
+      + '65[0-4][0-9]{2}|6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]))|'
+      + '(2:(429496729[0-5]|42949672[0-8][0-9]|'
+      + '4294967[01][0-9]{2}|'
+      + '429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|'
+      + '4294[0-8][0-9]{5}|'
+      + '429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[01][0-9]{8}|'
+      + '[0-3]?[0-9]{0,8}[0-9]):'
+      + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+      + '6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]))|'
+      + '(([3-9a-fA-F]|[1-9a-fA-F][0-9a-fA-F]{1,3}):'
+      + '[0-9a-fA-F]{1,12})';
     }
     description
-      "A route distinguisher is an 8-octet value used to distinguish
-       routes from different BGP VPNs (RFC 4364). A route
-       distinguisher consists of three fields: A 2-octet type field,
-       an administrator field, and an assigned number field.
-       According to the data formats for type 0, 1, and 2 defined in
-       RFC4364, the encoding pattern is defined as:
+      "A route distinguisher is an 8-octet value used to 
+       distinguish routes from different BGP VPNs (RFC 4364). A 
+       route distinguisher consists of three fields: A 2-octet 
+       type field, an administrator field, and an assigned number 
+       field. According to the data formats for type 0, 1, and 2 
+       defined in RFC4364, the encoding pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
@@ -686,27 +705,38 @@ module ietf-routing-types {
 
        Some valid examples are: 0:100:100, 1:1.1.1.1:100, and
        2:1234567890:203.";
-    reference "RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs).";
+    reference "RFC4364: BGP/MPLS IP Virtual Private Networks 
+               (VPNs).";
   }
 
   typedef route-origin {
     type string {
       pattern
-        '(0:(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d):(429496729[0-5]|42949672[0-8]\d|'
-      + '4294967[01]\d{2}|429496[0-6]\d{3}|42949[0-5]\d{4}|'
-      + '4294[0-8]\d{5}|429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|'
-      + '[0-3]?\d{0,8}\d))|'
-      + '(1:(((\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|'
-      + '1\d{2}|2[0-4]\d|25[0-5])):(6553[0-5]|655[0-2]\d|'
-      + '65[0-4]\d{2}|6[0-4]\d{3}|[0-5]?\d{0,3}\d))|'
-      + '(2:(429496729[0-5]|42949672[0-8]\d|4294967[01]\d{2}|'
-      + '429496[0-6]\d{3}|42949[0-5]\d{4}|4294[0-8]\d{5}|'
-      + '429[0-3]\d{6}|42[0-8]\d{7}|4[01]\d{8}|[0-3]?\d{0,8}\d):'
-      + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-      + '[0-5]?\d{0,3}\d))|'
-      + '(([3-9a-fA-F]|[1-9a-fA-F][\da-fA-F]{1,3}):'
-      + '[\da-fA-F]{1,12})';
+        '(0:(6553[0-5]|655[0-2][0-9]|'
+      + '65[0-4][0-9]{2}|6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]):(429496729[0-5]|'
+      + '42949672[0-8][0-9]|'
+      + '4294967[01][0-9]{2}|429496[0-6][0-9]{3}|'
+      + '42949[0-5][0-9]{4}|'
+      + '4294[0-8][0-9]{5}|429[0-3][0-9]{6}|'
+      + '42[0-8][0-9]{7}|4[01][0-9]{8}|'
+      + '[0-3]?[0-9]{0,8}[0-9]))|'
+      + '(1:((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|'
+      + '25[0-5])\.){3}([0-9]|[1-9][0-9]|'
+      + '1[0-9]{2}|2[0-4][0-9]|25[0-5])):(6553[0-5]|'
+      + '655[0-2][0-9]|'
+      + '65[0-4][0-9]{2}|6[0-4][0-9]{3}|[0-5]?[0-9]{0,3}[0-9]))|'
+      + '(2:(429496729[0-5]|42949672[0-8][0-9]|'
+      + '4294967[01][0-9]{2}|'
+      + '429496[0-6][0-9]{3}|42949[0-5][0-9]{4}|'
+      + '4294[0-8][0-9]{5}|'
+      + '429[0-3][0-9]{6}|42[0-8][0-9]{7}|4[01][0-9]{8}|'
+      + '[0-3]?[0-9]{0,8}[0-9]):'
+      + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+      + '6[0-4][0-9]{3}|'
+      + '[0-5]?[0-9]{0,3}[0-9]))|'
+      + '(([3-9a-fA-F]|[1-9a-fA-F][0-9a-fA-F]{1,3}):'
+      + '[0-9a-fA-F]{1,12})';
     }
     description
       "A route origin is an 8-octet BGP extended community
@@ -738,13 +768,15 @@ module ietf-routing-types {
           + '(((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3}'
           + '(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])))'
           + ':'
-          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-          + '[0-5]?\d{0,3}\d)';
+          + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+          + '6[0-4][0-9]{3}|'
+          + '[0-5]?[0-9]{0,3}[0-9])';
       pattern '((([^:]+:){6}(([^:]+:[^:]+)|(.*\..*)))|'
           + '((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))'
           + ':'
-          + '(6553[0-5]|655[0-2]\d|65[0-4]\d{2}|6[0-4]\d{3}|'
-          + '[0-5]?\d{0,3}\d)';
+          + '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
+          + '6[0-4][0-9]{3}|'
+          + '[0-5]?[0-9]{0,3}[0-9])';
     }
     description
       "An IPv6 route origin is a 20-octet BGP IPv6 address
@@ -830,8 +862,8 @@ module ietf-routing-types {
     type string {
       pattern
         '0[xX](0((\.0?)?[pP](\+)?0?|(\.0?))|'
-      + '1(\.([\da-fA-F]{0,5}[02468aAcCeE]?)?)?[pP](\+)?(12[0-7]|'
-      + '1[01]\d|0?\d?\d)?)';
+      + '1(\.([0-9a-fA-F]{0,5}[02468aAcCeE]?)?)?[pP](\+)?(12[0-7]|'
+      + '1[01][0-9]|0?[0-9]?[0-9])?)';
     }
     description
       "Bandwidth in IEEE 754 floating point 32-bit binary format:
@@ -844,10 +876,10 @@ module ietf-routing-types {
        non-fraction: 0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
        where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
        integers in the range of [0..127].
-       When six hexadecimal digits are used for 'hhhhhh' or 'HHHHHH',
-       the least significant digit must be an even number.
-       'x' and 'X' indicate hexadecimal; 'p' and 'P' indicate power
-       of two. Some examples are: 0x0p0, 0x1p10, and
+       When six hexadecimal digits are used for 'hhhhhh' or 
+       'HHHHHH', the least significant digit must be an even 
+       number. 'x' and 'X' indicate hexadecimal; 'p' and 'P' 
+       indicate power of two. Some examples are: 0x0p0, 0x1p10, and
        0x1.abcde2p+20";
     reference
       "IEEE Std 754-2008: IEEE Standard for Floating-Point
@@ -1025,7 +1057,10 @@ module ietf-routing-types {
 
   grouping mpls-label-stack {
     description
-      "A grouping that specifies an MPLS label stack.";
+      "A grouping that specifies an MPLS label stack. List 
+       entries are ordered with the first entry being the 
+       top of stack, the next entry being the next entry 
+       on the stack, and so on."; 
     container mpls-label-stack {
       description
         "Container for a list of MPLS label stack entries.";
@@ -1036,9 +1071,11 @@ module ietf-routing-types {
         leaf id {
           type uint8;
           description
-            "Identifies the sequence of an MPLS label stack entries.
-             An entry with smaller ID value is precedes an entry in
-             the label stack with a smaller ID.";
+            "Identifies the entry in a sequence of an MPLS label 
+             stack entries. An entry with smaller ID value is 
+             precedes an entry in the label stack with a smaller
+             ID. The value of this id has no semantic meaning other
+             than ordering and referencing the entry.";
         }
         leaf label {
           type rt-types:mpls-label;
@@ -1088,131 +1125,6 @@ module ietf-routing-types {
         mandatory true;
         description
           "Import/export type of the Route Target.";
-      }
-    }
-  }
-
-  grouping geo-coordinates {
-    description
-      "Standard grouping for Geo Coordinates
-       in routing information";
-    container geo-coordinates {
-      description
-        "Container for Geo Coordinates";
-      leaf flags {
-        type bits {
-          bit U {
-            description
-              "If the U-bit is set, it indicates that
-               the location-uncertainty is specified, If the
-               U-bit is clear, it indicates the
-               location-uncertainty is unspecified.";
-          }
-          bit N {
-            description
-              "If the N-bit is set, it indicates the
-               latitude is north relative to the Equator. If
-               the N-bit is clear, it indicates the latitude
-               is south of the Equator.";
-          }
-          bit E {
-            description
-              "If the E-bit is set, it indicates the
-               longitute is east of the Prime Meridian. If
-               the E-bit is clear, it indicates the longitude
-               is west of the Prime Meridian.";
-          }
-          bit A {
-            description
-              "If the A-bit is set, it indicates the
-               altitude is specified. If the A-bit is clear,
-               it indicates the altitude is unspecified.";
-          }
-          bit M {
-            description
-              "If the M-bit is set, it indicates the
-               altitude is specified in meters. If the M-bit
-               is clear, it indicates the altitude is
-               specified in centimeters.";
-          }
-          bit R {
-            description
-              "If the R-bit is set, it indicates the
-               radius is specified and the encoding is for a
-               circular area. If the R-bit is clear, it
-               indicates the radius is unspecified and the
-               encoding is for a single point.";
-          }
-          bit K {
-            description
-              "If the R-bit is set, it indicates the
-               radius is specified in kilometers. If the
-               R-bit is clear, it indicates the radius is
-               specified in meters.";
-          }
-        }
-        description
-          "Bits defining granularity or semantics
-           of Geo Coordinates fields.";
-      }
-      leaf location-uncertainty {
-        type uint16;
-        description
-          "Number of centimeters of uncertainty for
-           the location.";
-      }
-      leaf latitude-degrees {
-        type uint8 {
-          range "0 .. 90";
-        }
-        description
-          "Latitude degrees north or south of the
-           Equator (northern or southern hemisphere,
-           respectively).";
-      }
-      leaf latitude-milliseconds {
-        type uint24 {
-          range "0 .. 3599999";
-        }
-        description
-          "Latitude millisecond granularity (less
-           than 60 minutes or a single degree).";
-      }
-      leaf longitude-degrees {
-        type uint8 {
-          range "0 .. 180";
-        }
-        description
-          "Longitude degrees east or westof the
-           Prime Meridian (eastern or western hemisphere,
-           respectively).";
-      }
-      leaf longitude-milliseconds {
-        type uint24 {
-          range "0 .. 3599999";
-        }
-        description
-          "Longitude millisecond granularity (less
-           than 60 minutes or a single degree).";
-      }
-      leaf altitude {
-        type int32;
-        description
-          "Height relative to sea level in
-           centimeters or meters.  A negative height
-           indicates that the location is below sea
-           level.";
-      }
-      leaf radius {
-        type uint16;
-        description
-          "Radius of a circle centered at the
-           specified coordinates. The radius is specified
-           in meters unless the K-bit is specified
-           indicating specification in kilometers. If the
-           radius is specified, the geo-coordinates specify
-           the entire area of the circle defined by the
-           radius and center point.";
       }
     }
   }
@@ -1924,17 +1836,6 @@ reference:    RFC XXXX
       <?rfc include="reference.RFC.5701"?>
       <?rfc include="reference.RFC.5880"?>
       <?rfc include="reference.RFC.7274"?>
-      <reference anchor="WGS84">
-      <front>
-      <title>Department of Defense World Geodetic System 1984, 
-      Third Edition</title>
-        <author>
-        <organization>National Imagery and Mapping Agency</organization> 
-        </author>
-        <date month="January" year="2000" />
-      </front>
-      <seriesInfo name="NIMA" value="TR83500.2" />
-      </reference>
     </references>
 
   </back>

@@ -321,7 +321,7 @@ module iana-routing-types {
        Address Family - IANA Registry Assigned Number: 16392";
   }
 
-  identity trill-mac-48 {
+  identity trill-mac-40 {
     base address-family;
     description
       "TRILL Final 5 octets of 64-bit MAC address

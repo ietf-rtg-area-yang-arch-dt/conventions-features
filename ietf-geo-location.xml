@@ -1,0 +1,23 @@
+          <t hangText="geo-coordinates"><vspace blankLines="0" />
+
+	  This grouping defines a reusable collection of schema nodes
+	  representing the Geo-coordinates in IETF models. 
+          The schema modes specify the location of an object
+          using the WGS-84 (World Geodetic System) reference
+          coordinate system <xref target="WGS84"/>. This is expected to 
+          used in augmentations to routing protocol models such 
+          as <xref target="I-D.ietf-ospf-yang"/>.
+          </t>
+
+
+      <reference  anchor="WG84">
+      <front>
+      <title>Department of Defense World Geodetic System 1984, 
+      Third Edition</title>
+        <author>
+        <organization>National Imagery and Mapping Agency</organization> 
+        </author>
+        <date month="January" year="2000" />
+      </Frontk>
+      <seriesInfo name="NIMA" value="TR83500.2" />
+      </reference>

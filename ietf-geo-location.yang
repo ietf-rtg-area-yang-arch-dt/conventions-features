@@ -1,0 +1,125 @@
+
+  grouping geo-coordinates {
+    description
+      "Standard grouping for Geo Coordinates
+       in routing information";
+    container geo-coordinates {
+      description
+        "Container for Geo Coordinates";
+      leaf flags {
+        type bits {
+          bit U {
+            description
+              "If the U-bit is set, it indicates that
+               the location-uncertainty is specified, If the
+               U-bit is clear, it indicates the
+               location-uncertainty is unspecified.";
+          }
+          bit N {
+            description
+              "If the N-bit is set, it indicates the
+               latitude is north relative to the Equator. If
+               the N-bit is clear, it indicates the latitude
+               is south of the Equator.";
+          }
+          bit E {
+            description
+              "If the E-bit is set, it indicates the
+               longitute is east of the Prime Meridian. If
+               the E-bit is clear, it indicates the longitude
+               is west of the Prime Meridian.";
+          }
+          bit A {
+            description
+              "If the A-bit is set, it indicates the
+               altitude is specified. If the A-bit is clear,
+               it indicates the altitude is unspecified.";
+          }
+          bit M {
+            description
+              "If the M-bit is set, it indicates the
+               altitude is specified in meters. If the M-bit
+               is clear, it indicates the altitude is
+               specified in centimeters.";
+          }
+          bit R {
+            description
+              "If the R-bit is set, it indicates the
+               radius is specified and the encoding is for a
+               circular area. If the R-bit is clear, it
+               indicates the radius is unspecified and the
+               encoding is for a single point.";
+          }
+          bit K {
+            description
+              "If the R-bit is set, it indicates the
+               radius is specified in kilometers. If the
+               R-bit is clear, it indicates the radius is
+               specified in meters.";
+          }
+        }
+        description
+          "Bits defining granularity or semantics
+           of Geo Coordinates fields.";
+      }
+      leaf location-uncertainty {
+        type uint16;
+        description
+          "Number of centimeters of uncertainty for
+           the location.";
+      }
+      leaf latitude-degrees {
+        type uint8 {
+          range "0 .. 90";
+        }
+        description
+          "Latitude degrees north or south of the
+           Equator (northern or southern hemisphere,
+           respectively).";
+      }
+      leaf latitude-milliseconds {
+        type uint24 {
+          range "0 .. 3599999";
+        }
+        description
+          "Latitude millisecond granularity (less
+           than 60 minutes or a single degree).";
+      }
+      leaf longitude-degrees {
+        type uint8 {
+          range "0 .. 180";
+        }
+        description
+          "Longitude degrees east or westof the
+           Prime Meridian (eastern or western hemisphere,
+           respectively).";
+      }
+      leaf longitude-milliseconds {
+        type uint24 {
+          range "0 .. 3599999";
+        }
+        description
+          "Longitude millisecond granularity (less
+           than 60 minutes or a single degree).";
+      }
+      leaf altitude {
+        type int32;
+        description
+          "Height relative to sea level in
+           centimeters or meters.  A negative height
+           indicates that the location is below sea
+           level.";
+      }
+      leaf radius {
+        type uint16;
+        description
+          "Radius of a circle centered at the
+           specified coordinates. The radius is specified
+           in meters unless the K-bit is specified
+           indicating specification in kilometers. If the
+           radius is specified, the geo-coordinates specify
+           the entire area of the circle defined by the
+           radius and center point.";
+      }
+    }
+  }
