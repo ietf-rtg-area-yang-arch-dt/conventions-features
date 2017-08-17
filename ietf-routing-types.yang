@@ -15,8 +15,8 @@ module ietf-routing-types {
     "WG Web:   <http://tools.ietf.org/wg/rtgwg/>
      WG List:  <mailto:rtgwg@ietf.org>
 
-     Editor:   Xufeng Lui
-               <mailto:Xufeng_Lui@jabail.com>
+     Editor:   Xufeng Liu
+               <mailto:Xufeng_Liu@jabail.com>
                Yingzhen Qu
                <mailto:yingzhen.qu@huawei.com>
                Acee Lindem
@@ -178,27 +178,27 @@ module ietf-routing-types {
        general role in BGP route filtering.
        A route target consists of two or three fields:
        a 2-octet type field, an administrator field,
-       and, optionally, an assigned number field. 
+       and, optionally, an assigned number field.
 
        According to the data formats for type 0, 1, 2, and 6
-       defined in RFC4360, RFC5668, and RFC7432, the encoding 
+       defined in RFC4360, RFC5668, and RFC7432, the encoding
        pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
-       6:6-octet-mac-address. 
-       
-       Additionally, a generic pattern is defined for future 
+       6:6-octet-mac-address.
+
+       Additionally, a generic pattern is defined for future
        route target types:
 
        2-octet-other-hex-number:6-octet-hex-number
 
-       Some valid examples are: 0:100:100, 1:1.1.1.1:100, 
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100,
        2:1234567890:203 and 6:26:00:08:92:78:00";
     reference
       "RFC4360: BGP Extended Communities Attribute.
-       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs) 
+       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs)
        RFC5668: 4-Octet AS Specific BGP Extended Community.
        RFC7432: BGP MPLS-Based Ethernet VPN";
   }
@@ -257,7 +257,7 @@ module ietf-routing-types {
     description
       "Indicates the role a route target takes
        in route filtering.";
-    reference "RFC4364: BGP/MPLS IP Virtual Private Networks 
+    reference "RFC4364: BGP/MPLS IP Virtual Private Networks
                (VPNs).";
   }
 
@@ -293,32 +293,32 @@ module ietf-routing-types {
       +     '[0-9a-fA-F]{1,12})';
     }
     description
-      "A route distinguisher is an 8-octet value used to 
-       distinguish routes from different BGP VPNs (RFC 4364). 
-       As per RFC 4360, a route distinguisher will have the same 
-       format as a route target and will consist of two or three 
-       fields including  a 2-octet type field, an administrator 
-       field, and, optionally, an assigned number field. 
+      "A route distinguisher is an 8-octet value used to
+       distinguish routes from different BGP VPNs (RFC 4364).
+       As per RFC 4360, a route distinguisher will have the same
+       format as a route target and will consist of two or three
+       fields including  a 2-octet type field, an administrator
+       field, and, optionally, an assigned number field.
 
        According to the data formats for type 0, 1, 2, and 6
-       defined in RFC4360, RFC5668, and RFC7432, the encoding 
+       defined in RFC4360, RFC5668, and RFC7432, the encoding
        pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
-       6:6-octet-mac-address. 
-       
-       Additionally, a generic pattern is defined for future 
+       6:6-octet-mac-address.
+
+       Additionally, a generic pattern is defined for future
        route discriminator types:
 
        2-octet-other-hex-number:6-octet-hex-number
 
-       Some valid examples are: 0:100:100, 1:1.1.1.1:100, 
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100,
        2:1234567890:203 and 6:26:00:08:92:78:00";
     reference
       "RFC4360: BGP Extended Communities Attribute.
-       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs) 
+       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs)
        RFC5668: 4-Octet AS Specific BGP Extended Community.
        RFC7432: BGP MPLS-Based Ethernet VPN";
   }
@@ -358,28 +358,28 @@ module ietf-routing-types {
       "A route origin is an 8-octet BGP extended community
        identifying the set of sites where the BGP route
        originated (RFC 4364). A route target consists of two
-       or three fields: a 2-octet type field, an administrator 
-       field, and, optionally, an assigned number field. 
+       or three fields: a 2-octet type field, an administrator
+       field, and, optionally, an assigned number field.
 
        According to the data formats for type 0, 1, 2, and 6
-       defined in RFC4360, RFC5668, and RFC7432, the encoding 
+       defined in RFC4360, RFC5668, and RFC7432, the encoding
        pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
-       6:6-octet-mac-address. 
-       
-       Additionally, a generic pattern is defined for future 
+       6:6-octet-mac-address.
+
+       Additionally, a generic pattern is defined for future
        route origin types:
 
        2-octet-other-hex-number:6-octet-hex-number
 
-       Some valid examples are: 0:100:100, 1:1.1.1.1:100, 
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100,
        2:1234567890:203 and 6:26:00:08:92:78:00";
     reference
       "RFC4360: BGP Extended Communities Attribute.
-       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs) 
+       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs)
        RFC5668: 4-Octet AS Specific BGP Extended Community.
        RFC7432: BGP MPLS-Based Ethernet VPN";
   }
@@ -500,9 +500,9 @@ module ietf-routing-types {
        non-fraction: 0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
        where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
        integers in the range of [0..127].
-       When six hexadecimal digits are used for 'hhhhhh' or 
-       'HHHHHH', the least significant digit must be an even 
-       number. 'x' and 'X' indicate hexadecimal; 'p' and 'P' 
+       When six hexadecimal digits are used for 'hhhhhh' or
+       'HHHHHH', the least significant digit must be an even
+       number. 'x' and 'X' indicate hexadecimal; 'p' and 'P'
        indicate power of two. Some examples are: 0x0p0, 0x1p10, and
        0x1.abcde2p+20";
     reference
@@ -681,10 +681,10 @@ module ietf-routing-types {
 
   grouping mpls-label-stack {
     description
-      "A grouping that specifies an MPLS label stack. List 
-       entries are ordered with the first entry being the 
-       top of stack, the next entry being the next entry 
-       on the stack, and so on."; 
+      "A grouping that specifies an MPLS label stack. List
+       entries are ordered with the first entry being the
+       top of stack, the next entry being the next entry
+       on the stack, and so on.";
     container mpls-label-stack {
       description
         "Container for a list of MPLS label stack entries.";
@@ -695,8 +695,8 @@ module ietf-routing-types {
         leaf id {
           type uint8;
           description
-            "Identifies the entry in a sequence of an MPLS label 
-             stack entries. An entry with smaller ID value is 
+            "Identifies the entry in a sequence of an MPLS label
+             stack entries. An entry with smaller ID value is
              precedes an entry in the label stack with a smaller
              ID. The value of this id has no semantic meaning other
              than ordering and referencing the entry.";
