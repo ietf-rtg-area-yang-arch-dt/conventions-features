@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-09">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-10">
 
   <front>
 
@@ -407,7 +407,7 @@
 
     <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-08-16.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-09-02.yang"
 module ietf-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
   prefix rt-types;
@@ -425,8 +425,8 @@ module ietf-routing-types {
     "WG Web:   <http://tools.ietf.org/wg/rtgwg/>
      WG List:  <mailto:rtgwg@ietf.org>
 
-     Editor:   Xufeng Lui
-               <mailto:Xufeng_Lui@jabail.com>
+     Editor:   Xufeng Liu
+               <mailto:Xufeng_Liu@jabail.com>
                Yingzhen Qu
                <mailto:yingzhen.qu@huawei.com>
                Acee Lindem
@@ -453,9 +453,8 @@ module ietf-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-06-29 {
-    description
-      "Initial revision.";
+  revision 2017-09-02 {
+    description "Initial revision.";
     reference "RFC TBD: Routing YANG Data Types";
   }
 
@@ -588,27 +587,27 @@ module ietf-routing-types {
        general role in BGP route filtering.
        A route target consists of two or three fields:
        a 2-octet type field, an administrator field,
-       and, optionally, an assigned number field. 
+       and, optionally, an assigned number field.
 
        According to the data formats for type 0, 1, 2, and 6
-       defined in RFC4360, RFC5668, and RFC7432, the encoding 
+       defined in RFC4360, RFC5668, and RFC7432, the encoding
        pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
-       6:6-octet-mac-address. 
-       
-       Additionally, a generic pattern is defined for future 
+       6:6-octet-mac-address.
+
+       Additionally, a generic pattern is defined for future
        route target types:
 
        2-octet-other-hex-number:6-octet-hex-number
 
-       Some valid examples are: 0:100:100, 1:1.1.1.1:100, 
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100,
        2:1234567890:203 and 6:26:00:08:92:78:00";
     reference
       "RFC4360: BGP Extended Communities Attribute.
-       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs) 
+       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs)
        RFC5668: 4-Octet AS Specific BGP Extended Community.
        RFC7432: BGP MPLS-Based Ethernet VPN";
   }
@@ -667,7 +666,7 @@ module ietf-routing-types {
     description
       "Indicates the role a route target takes
        in route filtering.";
-    reference "RFC4364: BGP/MPLS IP Virtual Private Networks 
+    reference "RFC4364: BGP/MPLS IP Virtual Private Networks
                (VPNs).";
   }
 
@@ -703,32 +702,32 @@ module ietf-routing-types {
       +     '[0-9a-fA-F]{1,12})';
     }
     description
-      "A route distinguisher is an 8-octet value used to 
-       distinguish routes from different BGP VPNs (RFC 4364). 
-       As per RFC 4360, a route distinguisher will have the same 
-       format as a route target and will consist of two or three 
-       fields including  a 2-octet type field, an administrator 
-       field, and, optionally, an assigned number field. 
+      "A route distinguisher is an 8-octet value used to
+       distinguish routes from different BGP VPNs (RFC 4364).
+       As per RFC 4360, a route distinguisher will have the same
+       format as a route target and will consist of two or three
+       fields including  a 2-octet type field, an administrator
+       field, and, optionally, an assigned number field.
 
        According to the data formats for type 0, 1, 2, and 6
-       defined in RFC4360, RFC5668, and RFC7432, the encoding 
+       defined in RFC4360, RFC5668, and RFC7432, the encoding
        pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
-       6:6-octet-mac-address. 
-       
-       Additionally, a generic pattern is defined for future 
+       6:6-octet-mac-address.
+
+       Additionally, a generic pattern is defined for future
        route discriminator types:
 
        2-octet-other-hex-number:6-octet-hex-number
 
-       Some valid examples are: 0:100:100, 1:1.1.1.1:100, 
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100,
        2:1234567890:203 and 6:26:00:08:92:78:00";
     reference
       "RFC4360: BGP Extended Communities Attribute.
-       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs) 
+       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs)
        RFC5668: 4-Octet AS Specific BGP Extended Community.
        RFC7432: BGP MPLS-Based Ethernet VPN";
   }
@@ -760,7 +759,7 @@ module ietf-routing-types {
       +     '(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|'
       +     '6[0-4][0-9]{3}|'
       +     '[0-5]?[0-9]{0,3}[0-9]))|'
-      + '(6:[a-fA-F0-9]{1,2}){6}|'
+      + '(6(:[a-fA-F0-9]{2}){6})|'
       + '(([3-57-9a-fA-F]|[1-9a-fA-F][0-9a-fA-F]{1,3}):'
       +    '[0-9a-fA-F]{1,12})';
     }
@@ -768,28 +767,28 @@ module ietf-routing-types {
       "A route origin is an 8-octet BGP extended community
        identifying the set of sites where the BGP route
        originated (RFC 4364). A route target consists of two
-       or three fields: a 2-octet type field, an administrator 
-       field, and, optionally, an assigned number field. 
+       or three fields: a 2-octet type field, an administrator
+       field, and, optionally, an assigned number field.
 
        According to the data formats for type 0, 1, 2, and 6
-       defined in RFC4360, RFC5668, and RFC7432, the encoding 
+       defined in RFC4360, RFC5668, and RFC7432, the encoding
        pattern is defined as:
 
        0:2-octet-asn:4-octet-number
        1:4-octet-ipv4addr:2-octet-number
        2:4-octet-asn:2-octet-number.
-       6:6-octet-mac-address. 
-       
-       Additionally, a generic pattern is defined for future 
+       6:6-octet-mac-address.
+
+       Additionally, a generic pattern is defined for future
        route origin types:
 
        2-octet-other-hex-number:6-octet-hex-number
 
-       Some valid examples are: 0:100:100, 1:1.1.1.1:100, 
+       Some valid examples are: 0:100:100, 1:1.1.1.1:100,
        2:1234567890:203 and 6:26:00:08:92:78:00";
     reference
       "RFC4360: BGP Extended Communities Attribute.
-       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs) 
+       RFC4364: BGP/MPLS IP Virtual Private Networks (VPNs)
        RFC5668: 4-Octet AS Specific BGP Extended Community.
        RFC7432: BGP MPLS-Based Ethernet VPN";
   }
@@ -910,9 +909,9 @@ module ietf-routing-types {
        non-fraction: 0x1.hhhhhhp{+}d or 0X1.HHHHHHP{+}D
        where 'h' and 'H' are hexadecimal digits, 'd' and 'D' are
        integers in the range of [0..127].
-       When six hexadecimal digits are used for 'hhhhhh' or 
-       'HHHHHH', the least significant digit must be an even 
-       number. 'x' and 'X' indicate hexadecimal; 'p' and 'P' 
+       When six hexadecimal digits are used for 'hhhhhh' or
+       'HHHHHH', the least significant digit must be an even
+       number. 'x' and 'X' indicate hexadecimal; 'p' and 'P'
        indicate power of two. Some examples are: 0x0p0, 0x1p10, and
        0x1.abcde2p+20";
     reference
@@ -1091,10 +1090,12 @@ module ietf-routing-types {
 
   grouping mpls-label-stack {
     description
-      "A grouping that specifies an MPLS label stack. List 
-       entries are ordered with the first entry being the 
-       top of stack, the next entry being the next entry 
-       on the stack, and so on."; 
+      "This grouping specifies an MPLS label stack. List
+       entries are in ascending order of ID with the first entry
+       being the leftmost label in the Network-Byte-Order (NBO)
+       MPLS header, i.e., the top of the label stack. The next
+       entry is the next label in MPLS header label stack, and
+       so on.";
     container mpls-label-stack {
       description
         "Container for a list of MPLS label stack entries.";
@@ -1105,11 +1106,12 @@ module ietf-routing-types {
         leaf id {
           type uint8;
           description
-            "Identifies the entry in a sequence of an MPLS label 
-             stack entries. An entry with smaller ID value is 
-             precedes an entry in the label stack with a smaller
-             ID. The value of this id has no semantic meaning other
-             than ordering and referencing the entry.";
+            "Identifies the entry in a sequence of an MPLS label
+             stack entries. An entry with smaller ID value
+             precedes an entry with a larger value in the
+             Network-Byte-Order (NBO) MPLS header. The value of
+             this ID has no semantic meaning other than ordering
+             and referencing the entry.";
         }
         leaf label {
           type rt-types:mpls-label;
@@ -1170,7 +1172,7 @@ module ietf-routing-types {
 
     <section title="IANA Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "iana-routing-types@2017-06-29.yang"
+<CODE BEGINS> file "iana-routing-types@2017-09-02.yang"
 module iana-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:iana-routing-types";
   prefix iana-rt-types;
@@ -1205,476 +1207,392 @@ module iana-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-06-29 {
-    description
-      "Initial revision.";
+  revision 2017-09-02 {
+    description "Initial revision.";
     reference "RFC TBD: IANA Routing YANG Data Types";
   }
 
   /*** Collection of IANA types related to routing ***/
-  /*** IANA address family Identities ***/
-
-  identity address-family {
-    description
-      "Base identity from which identities describing address
-       families are derived.";
-  }
-
-  identity ipv4 {
-    base address-family;
-    description
-      "IPv4 Address Family - IANA Registry Assigned Number: 1";
-  }
-
-  identity ipv6 {
-    base address-family;
-    description
-      "IPv6 Address Family - IANA Registry Assigned Number: 2";
-  }
-
-  identity nsap {
-    base address-family;
-    description
-      "OSI Network Service Access Point (NSAP) Address Family -
-       IANA Registry Assigned Number: 3";
-  }
-
-  identity hdlc {
-    base address-family;
-    description
-      "High-Level Data Link Control (HDLC) Address Family -
-       IANA Registry Assigned Number: 4";
-  }
-
-  identity bbn1822 {
-    base address-family;
-    description
-      "Bolt, Beranek, and Newman Report 1822 (BBN 1822)
-       Address Family - IANA Registry Assigned Number: 5";
-  }
-
-  identity ieee802 {
-    base address-family;
-    description
-      "IEEE 802 Committee Address Family (aka, MAC address) -
-       IANA Registry Assigned Number: 6";
-  }
-
-  identity e163 {
-    base address-family;
-    description
-      "ITU-T E.163 Address Family -
-       IANA Registry Assigned Number: 7";
-  }
-
-  identity e164 {
-    base address-family;
-    description
-      "ITU-T E.164 (SMDS, Frame Relay, ATM) Address Family -
-       IANA Registry Assigned Number: 8";
-  }
-
-  identity f69 {
-    base address-family;
-    description
-      "ITU-T F.69 (Telex) Address Family -
-       IANA Registry Assigned Number: 9";
-  }
-
-  identity x121 {
-    base address-family;
-    description
-      "ITU-T X.121 (X.25, Frame Relay) Address Family -
-       IANA Registry Assigned Number: 10";
-  }
-
-  identity ipx {
-    base address-family;
-    description
-      "Novell Internetwork Packet Exchange (IPX)
-       Address Family - IANA Registry Assigned Number: 11";
-  }
-
-  identity appletalk {
-    base address-family;
-    description
-      "Apple AppleTalk Address Family -
-       IANA Registry Assigned Number: 12";
-  }
-
-  identity decnet-iv {
-    base address-family;
-    description
-      "Digital Equipment DECnet Phase IV Address Family -
-       IANA Registry Assigned Number: 13";
-  }
-
-  identity vines {
-    base address-family;
-    description
-      "Banyan Vines Address Family -
-       IANA Registry Assigned Number: 14";
-  }
-
-  identity e164-nsap {
-    base address-family;
-    description
-      "ITU-T E.164 with NSAP sub-address Address Family -
-       IANA Registry Assigned Number: 15";
-  }
-
-  identity dns {
-    base address-family;
-    description
-      "Domain Name System (DNS) Address Family -
-       IANA Registry Assigned Number: 16";
-  }
-
-  identity distinguished-name {
-    base address-family;
-    description
-      "Distinguished Name Address Family -
-       IANA Registry Assigned Number: 17";
-  }
-
-  identity as-num {
-    base address-family;
-    description
-      "AS Number Family -
-       IANA Registry Assigned Number: 18";
-  }
-
-  identity xtp-v4 {
-    base address-family;
-    description
-      "Xpress Transport Protocol (XTP) over IPv4
-       Address Family - IANA Registry Assigned Number: 19";
-  }
-
-  identity xtp-v6 {
-    base address-family;
-    description
-      "Xpress Transport Protocol (XTP) over IPv4
-       Address Family - IANA Registry Assigned Number: 20";
-  }
-
-  identity xtp-native {
-    base address-family;
-    description
-      "Xpress Transport Protocol (XTP) native mode
-       Address Family - IANA Registry Assigned Number: 21";
-  }
-
-  identity fc-port {
-    base address-family;
-    description
-      "Fibre Channel (FC) World-Wide Port Name
-       Address Family - IANA Registry Assigned Number: 22";
-  }
-
-  identity fc-node {
-    base address-family;
-    description
-      "Fibre Channel (FC) World-Wide Node Name
-       Address Family - IANA Registry Assigned Number: 23";
-  }
-
-  identity gwid {
-    base address-family;
-    description
-      "ATM Gateway Identifier (GWID) Number Family -
-       IANA Registry Assigned Number: 24";
-  }
-
-  identity l2vpn {
-    base address-family;
-    description
-      "Layer-2 VPN (L2VPN) Address Family -
-       IANA Registry Assigned Number: 25";
-  }
-
-  identity mpls-tp-section-eid {
-    base address-family;
-    description
-      "MPLS-TP Section Endpoint Identifier Address Family -
-       IANA Registry Assigned Number: 26";
-  }
-
-  identity mpls-tp-lsp-eid {
-    base address-family;
-    description
-      "MPLS-TP LSP Endpoint Identifier Address Family -
-       IANA Registry Assigned Number: 27";
-  }
-
-  identity mpls-tp-pwe-eid {
-    base address-family;
-    description
-      "MPLS-TP Pseudowire Endpoint Identifier
-       Address Family - IANA Registry Assigned Number: 28";
-  }
-
-  identity mt-v4 {
-    base address-family;
-    description
-      "Multi-Topology IPv4 Address Family -
-       Address Family - IANA Registry Assigned Number: 29";
-  }
-
-  identity mt-v6 {
-    base address-family;
-    description
-      "Multi-Topology IPv6 Address Family -
-       Address Family - IANA Registry Assigned Number: 30";
-  }
-
-  identity eigrp-common-sf {
-    base address-family;
-    description
-      "Enhanced Interior Gateway Routing Protocol (EIGRP)
-       Common Service Family Address Family -
-       IANA Registry Assigned Number: 16384";
-  }
-
-  identity eigrp-v4-sf {
-    base address-family;
-    description
-      "Enhanced Interior Gateway Routing Protocol (EIGRP)
-       IPv4 Service Family Address Family -
-       IANA Registry Assigned Number: 16385";
-  }
-
-  identity eigrp-v6-sf {
-    base address-family;
-    description
-      "Enhanced Interior Gateway Routing Protocol (EIGRP)
-       IPv6 Service Family Address Family -
-       IANA Registry Assigned Number: 16386";
-  }
-
-  identity lcaf {
-    base address-family;
-    description
-      "LISP Canonical Address Format (LCAF)
-       Address Family - IANA Registry Assigned Number: 16387";
-  }
-
-  identity bgp-ls {
-    base address-family;
-    description
-      "Border Gatway Protocol - Link State (BGP-LS)
-       Address Family - IANA Registry Assigned Number: 16388";
-  }
-
-  identity mac-48 {
-    base address-family;
-    description
-      "IEEE 48-bit Media Access Control (MAC)
-       Address Family - IANA Registry Assigned Number: 16389";
-  }
-
-  identity mac-64 {
-    base address-family;
-    description
-      "IEEE 64-bit Media Access Control (MAC)
-       Address Family - IANA Registry Assigned Number: 16390";
-  }
-
-  identity trill-oui {
-    base address-family;
-    description
-      "TRILL IEEE Organizationally Unique Identifier (OUI) -
-       Address Family - IANA Registry Assigned Number: 16391";
-  }
-
-  identity trill-mac-24 {
-    base address-family;
-    description
-      "TRILL Final 3 octets of 48-bit MAC address
-       Address Family - IANA Registry Assigned Number: 16392";
-  }
-
-  identity trill-mac-48 {
-    base address-family;
-    description
-      "TRILL Final 5 octets of 64-bit MAC address
-       Address Family - IANA Registry Assigned Number: 16393";
-  }
-
-  identity trill-rbridge-port-id {
-    base address-family;
-    description
-      "TRILL Remote Bridge (RBridge) Port ID
-       Address Family - IANA Registry Assigned Number: 16394";
-  }
-
-  identity trill-nickname {
-    base address-family;
-    description
-      "TRILL Nickname
-       Address Family - IANA Registry Assigned Number: 16395";
-  }
-
-  /*** SAFIs for Multi-Protocol BGP Identities ***/
-
-  identity bgp-safi {
-    description
-      "Base identity from which identities describing BGP
-       Subsequent Address Family Identifier (SAFI) - RFC 4760.";
-  }
-
-  identity unicast-safi {
-    base bgp-safi;
-    description
-      "Unicast SAFI -
-       IANA Registry Assigned Number: 1";
-  }
-
-  identity multicast-safi {
-    base bgp-safi;
-    description
-      "Multicast SAFI -
-       IANA Registry Assigned Number: 2";
-  }
-
-  identity labeled-unicast-safi {
-    base bgp-safi;
-    description
-      "Labeled Unicast SAFI -
-       IANA Registry Assigned Number: 4";
-  }
-
-  identity multicast-vpn-safi {
-    base bgp-safi;
-    description
-      "Multicast VPN SAFI -
-       IANA Registry Assigned Number: 5";
-  }
-
-  identity pseudowire-safi {
-    base bgp-safi;
-    description
-      "Multi-segment Pseudowire VPN SAFI -
-       IANA Registry Assigned Number: 6";
-  }
-
-  identity tunnel-enap-safi {
-    base bgp-safi;
-    description
-      "Tunnel Encap SAFI -
-       IANA Registry Assigned Number: 7";
-  }
-
-  identity mcast-vpls-safi {
-    base bgp-safi;
-    description
-      "Multicast Virtual Private LAN Service (VPLS) SAFI -
-       IANA Registry Assigned Number: 8";
-  }
-
-  identity tunnel-safi {
-    base bgp-safi;
-    description
-      "Tunnel SAFI -
-       IANA Registry Assigned Number: 64";
-  }
-
-  identity vpls-safi {
-    base bgp-safi;
-    description
-      "Virtual Private LAN Service (VPLS) SAFI -
-       IANA Registry Assigned Number: 65";
-  }
-
-  identity mdt-safi {
-    base bgp-safi;
-    description
-      "Multicast Distribution Tree (MDT) SAFI -
-       IANA Registry Assigned Number: 66";
-  }
-
-  identity v4-over-v6-safi {
-    base bgp-safi;
-    description
-      "IPv4 over IPv6 SAFI -
-       IANA Registry Assigned Number: 67";
-  }
-
-  identity v6-over-v4-safi {
-    base bgp-safi;
-    description
-      "IPv6 over IPv4 SAFI -
-       IANA Registry Assigned Number: 68";
-  }
-
-  identity l1-vpn-auto-discovery-safi {
-    base bgp-safi;
-    description
-      "Layer-1 VPN Auto Discovery SAFI -
-       IANA Registry Assigned Number: 69";
-  }
-
-  identity evpn-safi {
-    base bgp-safi;
-    description
-      "Ethernet VPN (EVPN) SAFI -
-       IANA Registry Assigned Number: 70";
-  }
-
-  identity bgp-ls-safi {
-    base bgp-safi;
-    description
-      "BGP Link-State (BGP-LS) SAFI -
-       IANA Registry Assigned Number: 71";
-  }
-
-  identity bgp-ls-vpn-safi {
-    base bgp-safi;
-    description
-      "BGP Link-State (BGP-LS) VPN SAFI -
-       IANA Registry Assigned Number: 72";
-  }
-
-  identity sr-te-safi {
-    base bgp-safi;
-    description
-      "Segment Routing - Traffic Engineering (SR-TE) SAFI -
-       IANA Registry Assigned Number: 73";
-  }
-
-  identity labeled-vpn-safi {
-    base bgp-safi;
-    description
-      "MPLS Labeled VPN SAFI -
-       IANA Registry Assigned Number: 128";
-  }
-
-  identity multicast-mpls-vpn-safi {
-    base bgp-safi;
-    description
-      "Multicast for BGP/MPLS IP VPN SAFI -
-       IANA Registry Assigned Number: 129";
-  }
-
-  identity route-target-safi {
-    base bgp-safi;
-    description
-      "Route Target SAFI -
-       IANA Registry Assigned Number: 132";
-  }
-
-  identity ipv4-flow-spec-safi {
-    base bgp-safi;
-    description
-      "IPv4 Flow Specification SAFI -
-       IANA Registry Assigned Number: 133";
-  }
-
-  identity vpnv4-flow-spec-safi {
-    base bgp-safi;
-    description
-      "IPv4 VPN Flow Specification SAFI -
-       IANA Registry Assigned Number: 134";
+  /*** IANA address family enumeration ***/
+
+  typedef address-family {
+    type enumeration {
+      enum ipv4 {
+        value 1;
+        description "IPv4 Address Family";
+      }
+
+      enum ipv6 {
+        value 2;
+        description "IPv6 Address Family";
+      }
+
+      enum nsap {
+        value 3;
+        description "OSI Network Service Access Point (NSAP)
+                     Address Family";
+      }
+
+      enum hdlc {
+        value 4;
+        description "High-Level Data Link Control (HDLC)
+                     Address Family";
+
+      }
+
+      enum bbn1822 {
+        value 5;
+        description "Bolt, Beranek, and Newman Report
+                     1822 (BBN 1822) Address Family";
+      }
+
+      enum ieee802 {
+        value 6;
+        description "IEEE 802 Committee Address Family (aka,
+                     MAC address)";
+      }
+
+      enum e163 {
+        value 7;
+        description "ITU-T E.163 Address Family";
+      }
+
+      enum e164 {
+        value 8;
+        description "ITU-T E.164 (SMDS, Frame Relay, ATM)
+                     Address Family";
+      }
+
+      enum f69 {
+        value 9;
+        description "ITU-T F.69 (Telex) Address Family";
+      }
+
+      enum x121 {
+        value 10;
+        description  "ITU-T X.121 (X.25, Frame Relay)
+                      Address Family";
+      }
+
+      enum ipx {
+        value 11;
+        description "Novell Internetwork Packet Exchange (IPX)
+                     Address Family";
+      }
+
+      enum appletalk {
+        value 12;
+        description  "Apple AppleTalk Address Family";
+      }
+
+      enum decnet-iv {
+        value 13;
+        description "Digital Equipment DECnet Phase IV
+                     Address Family";
+      }
+
+      enum vines {
+        value 14;
+        description "Banyan Vines Address Family";
+      }
+
+      enum e164-nsap {
+        value 15;
+        description "ITU-T E.164 with NSAP sub-address
+                     Address Family";
+      }
+
+      enum dns {
+        value 16;
+        description "Domain Name System (DNS) Address
+                     Family";
+      }
+
+      enum distinguished-name {
+        value 17;
+        description "Distinguished Name Address Family";
+      }
+
+      enum as-num {
+        value 18;
+        description "AS Number Address Family";
+      }
+
+      enum xtp-v4 {
+        value 19;
+        description "Xpress Transport Protocol (XTP) over IPv4
+                     Address Family";
+      }
+
+      enum xtp-v6 {
+        value 20;
+        description "Xpress Transport Protocol (XTP) over IPv6
+                     Address Family";
+      }
+
+      enum xtp-native {
+        value 21;
+        description "Xpress Transport Protocol (XTP) native mode
+                     Address Family";
+      }
+
+      enum fc-port {
+        value 22;
+        description "Fibre Channel (FC) World-Wide Port Name
+                      Address Family";
+      }
+
+      enum fc-node {
+        value 23;
+        description "Fibre Channel (FC) World-Wide Node Name
+                     Address Family";
+      }
+
+      enum gwid {
+        value 24;
+        description
+          "ATM Gateway Identifier (GWID) Number Address Family";
+      }
+
+      enum l2vpn {
+        value 25;
+        description "Layer-2 VPN (L2VPN) Address Family";
+      }
+
+      enum mpls-tp-section-eid {
+        value 26;
+        description "MPLS-TP Section Endpoint Identifier
+                     Address Family";
+      }
+
+      enum mpls-tp-lsp-eid {
+        value 27;
+        description "MPLS-TP LSP Endpoint Identifier
+                     Address Family";
+      }
+
+      enum mpls-tp-pwe-eid {
+        value 28;
+        description "MPLS-TP Pseudowire Endpoint Identifier
+                     Address Family";
+      }
+
+      enum mt-v4 {
+        value 29;
+        description "Multi-Topology IPv4 Address Family";
+      }
+
+      enum mt-v6 {
+        value 30;
+        description "Multi-Topology IPv6 Address Family";
+      }
+
+      enum eigrp-common-sf {
+        value 16384;
+        description "Enhanced Interior Gateway Routing Protocol
+                     (EIGRP) Common Service Family Address
+                     Family";
+      }
+
+      enum eigrp-v4-sf {
+        value 16385;
+        description "Enhanced Interior Gateway Routing Protocol
+                     (EIGRP) IPv4 Service Family Address Family";
+      }
+
+      enum eigrp-v6-sf {
+        value 16386;
+        description "Enhanced Interior Gateway Routing Protocol
+                    (EIGRP) IPv6 Service Family Address Family";
+      }
+
+      enum lcaf {
+        value 16387;
+        description "LISP Canonical Address Format (LCAF)
+                     Address Family";
+      }
+
+      enum bgp-ls {
+        value 16388;
+        description "Border Gatway Protocol - Link State (BGP-LS)
+                     Address Family";
+      }
+
+      enum mac-48 {
+        value 16389;
+        description  "IEEE 48-bit Media Access Control (MAC)
+                      Address Family";
+      }
+
+      enum mac-64 {
+        value 16390;
+        description "IEEE 64-bit Media Access Control (MAC)
+                     Address Family";
+      }
+
+      enum trill-oui {
+        value 16391;
+        description "TRILL IEEE Organizationally Unique
+                     Identifier (OUI) Address Family";
+      }
+
+      enum trill-mac-24 {
+        value 16392;
+        description "TRILL Final 3 octets of 48-bit MAC
+                     address Address Family";
+      }
+
+      enum trill-mac-40 {
+        value 16393;
+        description "TRILL Final 5 octets of 64-bit MAC
+                     address Address Family";
+      }
+
+      enum ipv6-64 {
+        value 16394;
+        description "First 8 octects (64-bits) of an IPv6
+                     address Address Family";
+      }
+
+      enum trill-rbridge-port-id {
+        value 16395;
+        description "TRILL Remote Bridge (RBridge) Port ID
+                     Address Family";
+      }
+
+      enum trill-nickname {
+        value 16396;
+        description "TRILL Nickname Address Family";
+      }
+    }
+    description "Enumeration containing all the IANA
+                  defined address families.";
+
+  }
+
+  /*** SAFIs for Multi-Protocol BGP enumeration ***/
+
+  typedef bgp-safi {
+    type enumeration {
+      enum unicast-safi {
+        value 1;
+        description "Unicast SAFI";
+      }
+
+      enum multicast-safi {
+        value 2;
+        description "Multicast SAFI";
+      }
+
+      enum labeled-unicast-safi {
+        value 4;
+        description "Labeled Unicast SAFI";
+      }
+
+      enum multicast-vpn-safi {
+        value 5;
+        description "Multicast VPN SAFI";
+      }
+
+      enum pseudowire-safi {
+        value 6;
+        description "Multi-segment Pseudowire VPN SAFI";
+      }
+
+      enum tunnel-enap-safi {
+        value 7;
+        description "Tunnel Encap SAFI";
+      }
+
+      enum mcast-vpls-safi {
+        value 8;
+        description "Multicast Virtual Private LAN Service
+                     (VPLS) SAFI";
+      }
+
+      enum tunnel-safi {
+        value 64;
+        description "Tunnel SAFI";
+      }
+
+      enum vpls-safi {
+        value 65;
+        description "Virtual Private LAN Service (VPLS) SAFI";
+      }
+
+      enum mdt-safi {
+        value 66;
+        description "Multicast Distribution Tree (MDT) SAFI";
+      }
+
+      enum v4-over-v6-safi {
+        value 67;
+        description "IPv4 over IPv6 SAFI";
+      }
+
+      enum v6-over-v4-safi {
+        value 68;
+        description "IPv6 over IPv4 SAFI";
+      }
+
+      enum l1-vpn-auto-discovery-safi {
+        value 69;
+        description "Layer-1 VPN Auto Discovery SAFI";
+      }
+
+      enum evpn-safi {
+        value 70;
+        description "Ethernet VPN (EVPN) SAFI";
+      }
+
+      enum bgp-ls-safi {
+        value 71;
+        description "BGP Link-State (BGP-LS) SAFI";
+      }
+
+      enum bgp-ls-vpn-safi {
+        value 72;
+        description "BGP Link-State (BGP-LS) VPN SAFI";
+      }
+
+      enum sr-te-safi {
+        value 73;
+        description "Segment Routing - Traffic Engineering
+                     (SR-TE) SAFI";
+      }
+
+      enum labeled-vpn-safi {
+        value 128;
+        description "MPLS Labeled VPN SAFI";
+      }
+
+      enum multicast-mpls-vpn-safi {
+        value 129;
+        description "Multicast for BGP/MPLS IP VPN SAFI";
+      }
+
+      enum route-target-safi {
+        value 132;
+        description "Route Target SAFI";
+      }
+
+      enum ipv4-flow-spec-safi {
+        value 133;
+        description "IPv4 Flow Specification SAFI";
+      }
+
+      enum vpnv4-flow-spec-safi {
+        value 134;
+        description "IPv4 VPN Flow Specification SAFI";
+      }
+
+      enum vpn-auto-discovery-safi {
+        value 140;
+        description "VPN Auto-Discovery SAFI";
+      }
+    }
+    description "Enumeration for BGP Subsequent Address
+                   Family Identifier (SAFI) - RFC 4760.";
   }
 }
 

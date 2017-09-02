@@ -43,9 +43,8 @@ module ietf-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-06-29 {
-    description
-      "Initial revision.";
+  revision 2017-09-02 {
+    description "Initial revision.";
     reference "RFC TBD: Routing YANG Data Types";
   }
 
@@ -681,10 +680,12 @@ module ietf-routing-types {
 
   grouping mpls-label-stack {
     description
-      "A grouping that specifies an MPLS label stack. List
-       entries are ordered with the first entry being the
-       top of stack, the next entry being the next entry
-       on the stack, and so on.";
+      "This grouping specifies an MPLS label stack. List
+       entries are in ascending order of ID with the first entry
+       being the leftmost label in the Network-Byte-Order (NBO)
+       MPLS header, i.e., the top of the label stack. The next
+       entry is the next label in MPLS header label stack, and
+       so on.";
     container mpls-label-stack {
       description
         "Container for a list of MPLS label stack entries.";
@@ -696,10 +697,11 @@ module ietf-routing-types {
           type uint8;
           description
             "Identifies the entry in a sequence of an MPLS label
-             stack entries. An entry with smaller ID value is
-             precedes an entry in the label stack with a smaller
-             ID. The value of this id has no semantic meaning other
-             than ordering and referencing the entry.";
+             stack entries. An entry with smaller ID value
+             precedes an entry with a larger value in the
+             Network-Byte-Order (NBO) MPLS header. The value of
+             this ID has no semantic meaning other than ordering
+             and referencing the entry.";
         }
         leaf label {
           type rt-types:mpls-label;
