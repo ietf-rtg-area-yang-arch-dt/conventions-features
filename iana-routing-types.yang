@@ -32,7 +32,7 @@ module iana-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-09-02 {
+  revision 2017-09-11 {
     description "Initial revision.";
     reference "RFC TBD: IANA Routing YANG Data Types";
   }
@@ -417,6 +417,6 @@ module iana-routing-types {
       }
     }
     description "Enumeration for BGP Subsequent Address
-                   Family Identifier (SAFI) - RFC 4760.";
+                 Family Identifier (SAFI) - RFC 4760.";
   }
 }

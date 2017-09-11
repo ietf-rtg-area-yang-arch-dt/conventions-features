@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-10">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-11">
 
   <front>
 
@@ -77,7 +77,7 @@
       </address>
     </author>
 
-    <date year="2017"/>
+    <date/>
     <area>Routing</area>
 <!--
     <workgroup>Routing Area Working Group (rtgwg)</workgroup>
@@ -407,7 +407,7 @@
 
     <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-09-02.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-09-11.yang"
 module ietf-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
   prefix rt-types;
@@ -453,7 +453,7 @@ module ietf-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-09-02 {
+  revision 2017-09-11 {
     description "Initial revision.";
     reference "RFC TBD: Routing YANG Data Types";
   }
@@ -1090,12 +1090,11 @@ module ietf-routing-types {
 
   grouping mpls-label-stack {
     description
-      "This grouping specifies an MPLS label stack. List
-       entries are in ascending order of ID with the first entry
-       being the leftmost label in the Network-Byte-Order (NBO)
-       MPLS header, i.e., the top of the label stack. The next
-       entry is the next label in MPLS header label stack, and
-       so on.";
+      "This grouping specifies an MPLS label stack.  The label
+       stack is encoded as a list of label stack entries.  The
+       list key is an identifier which indicates relative
+       ordering of each entry, with the lowest value identifier
+       corresponding to the top of the label stack.";
     container mpls-label-stack {
       description
         "Container for a list of MPLS label stack entries.";
@@ -1106,11 +1105,11 @@ module ietf-routing-types {
         leaf id {
           type uint8;
           description
-            "Identifies the entry in a sequence of an MPLS label
-             stack entries. An entry with smaller ID value
-             precedes an entry with a larger value in the
-             Network-Byte-Order (NBO) MPLS header. The value of
-             this ID has no semantic meaning other than ordering
+            "Identifies the entry in a sequence of MPLS label
+             stack entries. An entry with a smaller identifier
+             value precedes an entry with a larger identifier
+             value in the label stack. The value of this ID has
+             no semantic meaning other than relative ordering
              and referencing the entry.";
         }
         leaf label {
@@ -1172,7 +1171,7 @@ module ietf-routing-types {
 
     <section title="IANA Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "iana-routing-types@2017-09-02.yang"
+<CODE BEGINS> file "iana-routing-types@2017-09-11.yang"
 module iana-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:iana-routing-types";
   prefix iana-rt-types;
@@ -1207,7 +1206,7 @@ module iana-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-09-02 {
+  revision 2017-09-11 {
     description "Initial revision.";
     reference "RFC TBD: IANA Routing YANG Data Types";
   }
@@ -1592,7 +1591,7 @@ module iana-routing-types {
       }
     }
     description "Enumeration for BGP Subsequent Address
-                   Family Identifier (SAFI) - RFC 4760.";
+                 Family Identifier (SAFI) - RFC 4760.";
   }
 }
 
