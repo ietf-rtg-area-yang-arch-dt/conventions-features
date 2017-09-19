@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-11">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-12">
 
   <front>
 
@@ -407,7 +407,7 @@
 
     <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-09-11.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-09-18.yang"
 module ietf-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
   prefix rt-types;
@@ -1171,7 +1171,7 @@ module ietf-routing-types {
 
     <section title="IANA Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "iana-routing-types@2017-09-11.yang"
+<CODE BEGINS> file "iana-routing-types@2017-09-18.yang"
 module iana-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:iana-routing-types";
   prefix iana-rt-types;
@@ -1206,7 +1206,7 @@ module iana-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-09-11 {
+  revision 2017-09-18 {
     description "Initial revision.";
     reference "RFC TBD: IANA Routing YANG Data Types";
   }
