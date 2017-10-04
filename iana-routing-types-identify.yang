@@ -289,7 +289,7 @@ module iana-routing-types {
   identity bgp-ls {
     base address-family;
     description
-      "Border Gatway Protocol - Link State (BGP-LS)
+      "Border Gateway Protocol - Link State (BGP-LS)
        Address Family - IANA Registry Assigned Number: 16388";
   }
 
@@ -385,7 +385,7 @@ module iana-routing-types {
        IANA Registry Assigned Number: 6";
   }
 
-  identity tunnel-enap-safi {
+  identity tunnel-encap-safi {
     base bgp-safi;
     description
       "Tunnel Encap SAFI -

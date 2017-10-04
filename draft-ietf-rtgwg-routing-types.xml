@@ -16,7 +16,7 @@
 <?rfc compact="yes"?> <?rfc subcompact="no"?>
 
 <!-- other categories: bcp, exp, historic, std -->
-<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-13">
+<rfc ipr="trust200902" category="std" docName="draft-ietf-rtgwg-routing-types-16">
 
   <front>
 
@@ -131,7 +131,7 @@
         <list style="hanging">
           <t hangText="router-id"><vspace blankLines="0" />
 
-          Router Identifiers are commonly used to identify a nodes in
+          Router Identifiers are commonly used to identify nodes in
           routing and other control plane protocols.  An example usage
           of router-id can be found in <xref
          target="I-D.ietf-ospf-yang"/>.
@@ -150,7 +150,7 @@
           <t hangText="ipv6-route-target"><vspace blankLines="0" />
 
           IPv6 Route Targets (RTs) are similar to standard Route 
-          Targets only they IPv6 Address Specific BGP Extended
+          Targets only they are IPv6 Address Specific BGP Extended
           Communities as described in <xref target="RFC5701"/>.
           An IPv6 Route Target is 20 octets and includes an IPv6
           address as the global administrator.
@@ -158,7 +158,7 @@
           <t hangText="route-target-type"><vspace blankLines="0" />
 
           This type defines the import and export rules of Route
-	  Targets, as descibed in Section 4.3.1 of
+	  Targets, as described in Section 4.3.1 of
 	  <xref target="RFC4364"/>. An example usage can be
           found in <xref target="I-D.ietf-idr-bgp-model"/>.
 
@@ -177,7 +177,7 @@
           <t hangText="route-origin"><vspace blankLines="0" />
 
           Route Origin is commonly used to indicate the Site 
-          of Origin for Routng and forwarding (VRF)
+          of Origin for Routing and forwarding (VRF)
           information, see <xref target="RFC4364"/>, in support of
           BGP/MPLS IP virtual private networks (VPNs) and BGP/MPLS
           Ethernet VPNs <xref target="RFC7432"/>.  An example usage 
@@ -187,7 +187,7 @@
           <t hangText="ipv6-route-origin"><vspace blankLines="0" />
 
           An IPv6 Route Origin would also be used to indicate the Site 
-          of Origin for Routng and forwarding (VRF)
+          of Origin for Routing and forwarding (VRF)
           information, see <xref target="RFC4364"/>, in support of
           virtual private networks (VPNs).  IPv6 Route Origins
           are IPv6 Address Specific BGP Extended
@@ -407,7 +407,7 @@
 
     <section title="IETF Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "ietf-routing-types@2017-09-18.yang"
+<CODE BEGINS> file "ietf-routing-types@2017-09-19.yang"
 module ietf-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:ietf-routing-types";
   prefix rt-types;
@@ -453,7 +453,7 @@ module ietf-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-09-18 {
+  revision 2017-09-19 {
     description "Initial revision.";
     reference "RFC TBD: Routing YANG Data Types";
   }
@@ -634,7 +634,7 @@ module ietf-routing-types {
       "An IPv6 route target is a 20-octet BGP IPv6 address
        specific extended community serving the same function
        as a standard 8-octet route target only allowing for
-       an IPv6 address as the global adminstrator. The format
+       an IPv6 address as the global administrator. The format
        is <ipv6-address:2-octet-number>.
 
        Some valid examples are: 2001:DB8::1:6544 and
@@ -814,8 +814,8 @@ module ietf-routing-types {
     description
       "An IPv6 route origin is a 20-octet BGP IPv6 address
        specific extended community serving the same function
-       as a standard 8-octet route only only allowing for
-       an IPv6 address as the global adminstrator. The format
+       as a standard 8-octet route only allowing for
+       an IPv6 address as the global administrator. The format
        is <ipv6-address:2-octet-number>.
 
        Some valid examples are: 2001:DB8::1:6544 and
@@ -1169,9 +1169,9 @@ module ietf-routing-types {
         ]]></artwork></figure>
     </section>
 
-    <section title="IANA Routing Types YANG Module">
+    <section anchor="IANA-MODELS" title="IANA Routing Types YANG Module">
       <figure><artwork><![CDATA[
-<CODE BEGINS> file "iana-routing-types@2017-09-18.yang"
+<CODE BEGINS> file "iana-routing-types@2017-09-19.yang"
 module iana-routing-types {
   namespace "urn:ietf:params:xml:ns:yang:iana-routing-types";
   prefix iana-rt-types;
@@ -1206,7 +1206,7 @@ module iana-routing-types {
      the RFC itself for full legal notices.";
   reference "RFC XXXX";
 
-  revision 2017-09-18 {
+  revision 2017-09-19 {
     description "Initial revision.";
     reference "RFC TBD: IANA Routing YANG Data Types";
   }
@@ -1413,7 +1413,7 @@ module iana-routing-types {
 
       enum bgp-ls {
         value 16388;
-        description "Border Gatway Protocol - Link State (BGP-LS)
+        description "Border Gateway Protocol - Link State (BGP-LS)
                      Address Family";
       }
 
@@ -1449,7 +1449,7 @@ module iana-routing-types {
 
       enum ipv6-64 {
         value 16394;
-        description "First 8 octects (64-bits) of an IPv6
+        description "First 8 octets (64-bits) of an IPv6
                      address Address Family";
       }
 
@@ -1498,7 +1498,7 @@ module iana-routing-types {
         description "Multi-segment Pseudowire VPN SAFI";
       }
 
-      enum tunnel-enap-safi {
+      enum tunnel-encap-safi {
         value 7;
         description "Tunnel Encap SAFI";
       }
@@ -1643,7 +1643,7 @@ reference:    RFC XXXX
       </artwork></figure>
     <section title="IANA-Maintained iana-routing-types Module">
    <t>This document defines the initial version of the IANA-maintained
-      iana-routing-types YANG module.</t>
+      iana-routing-types YANG module <xref target="IANA-MODELS"/>.</t>
    <t>The iana-routing-types YANG module is intended to reflect the 
    "Address Family Numbers" registry <xref target="IANA-ADDRESS-FAMILY-REGISTRY"/> 
    and "Subsequent Address Family Identifiers (SAFI) Parameters" registry 
@@ -1664,15 +1664,21 @@ reference:    RFC XXXX
    <t>When an Address Family or Subsequent Address Family is 
       respectively added to the "Address Family Numbers" 
       registry or the  "Subsequent Address Family Identifiers (SAFI) Parameters" 
-      registry,  a new "identity" statement must be added to the 
-      iana-routing-types YANG module.  The name of the "identity" is the 
-      same as the corresponding address family or SAFI only it willl be a 
+      registry,  a new "enum" statement must be added to the 
+      iana-routing-types YANG module.  The name of the "enum" is the 
+      same as the corresponding address family or SAFI only it will be a 
       valid YANG identifier in all lowercase and with hyphens separating 
       individual words in compound identifiers. The following 
-      substatements to the "identity" statement should be defined:
+      substatements to the "enum" statement should be defined:
    <figure><artwork>
-   "base": Contains the value "address-family" for address families 
-           or "bgp-safi" for subsequent address families.
+   "name": Contains the YANG enum identifier for the address-family 
+           or "bgp-safi" for subsequent address families. This may
+           be the same as the address-family or "bgp-safi" or it may
+           be a shorter version to faciliate YANG identifier usage. 
+
+   "value": Contains the IANA assigned value corresponding to the 
+            address-family or "bgp-safi" for subsequent address
+            families.
 
    "status": Include only if a registration has been deprecated (use
              the value "deprecated") or obsoleted (use the value
@@ -1691,7 +1697,7 @@ reference:    RFC XXXX
    <t>When the iana-routing-types YANG module is updated, a 
       new "revision" statement must be added in front of the existing 
       revision statements.</t>
-   <t>IANA has added this new note to the the "Address Family Numbers" 
+   <t>IANA has added this new note to the "Address Family Numbers" 
       and "Subsequent Address Family Identifiers (SAFI) Parameters" 
       registries:  
    <figure><artwork>
