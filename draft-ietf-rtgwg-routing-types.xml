@@ -1671,7 +1671,7 @@ reference:    RFC XXXX
       individual words in compound identifiers. The following 
       substatements to the "enum" statement should be defined:
    <figure><artwork>
-   "name": Contains the YANG enum identifier for the address-family 
+   "enum": Contains the YANG enum identifier for the address-family 
            or "bgp-safi" for subsequent address families. This may
            be the same as the address-family or "bgp-safi" or it may
            be a shorter version to faciliate YANG identifier usage. 
